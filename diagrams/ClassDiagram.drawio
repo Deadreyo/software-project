@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-10T17:54:56.424Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0" etag="Z9rb0_OLyyAl_h7oK1i9" version="24.3.1" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-10T18:04:20.069Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0" etag="1WzXSXgPFMKIHK5Y7Ye5" version="24.3.1" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1938" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -58,10 +58,10 @@
         <mxCell id="qeCgsQrjXM8rQXqWp_c4-104" value="+ set/get amount, category, name, description, source, destination." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-9" vertex="1">
           <mxGeometry y="438" width="475" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="qeCgsQrjXM8rQXqWp_c4-81" value="+ constructor(user, type, payment_method, amount, name)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-9" vertex="1">
+        <mxCell id="qeCgsQrjXM8rQXqWp_c4-84" value="+ constructor(id, user, type, paymentMethod, amount, name) // for loading from DB" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-9" vertex="1">
           <mxGeometry y="464" width="475" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="qeCgsQrjXM8rQXqWp_c4-84" value="+ constructor(id, user, type, payment_method, amount, name) // for loading from DB" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-9" vertex="1">
+        <mxCell id="qeCgsQrjXM8rQXqWp_c4-81" value="&lt;u&gt;+ create(user, type, paymentMethod, amount, name): Transaction&lt;/u&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-9" vertex="1">
           <mxGeometry y="490" width="475" height="26" as="geometry" />
         </mxCell>
         <mxCell id="qeCgsQrjXM8rQXqWp_c4-83" value="+ applyTransaction()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-9" vertex="1">
@@ -71,7 +71,7 @@
           <mxGeometry y="542" width="475" height="26" as="geometry" />
         </mxCell>
         <mxCell id="qeCgsQrjXM8rQXqWp_c4-40" value="User" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="243.75" y="190" width="462.5" height="450" as="geometry" />
+          <mxGeometry x="243.75" y="190" width="462.5" height="476" as="geometry" />
         </mxCell>
         <mxCell id="qeCgsQrjXM8rQXqWp_c4-41" value="- email: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-40" vertex="1">
           <mxGeometry y="26" width="462.5" height="26" as="geometry" />
@@ -121,8 +121,11 @@
         <mxCell id="qeCgsQrjXM8rQXqWp_c4-102" value="+ constructor(loginController, email, isPro, transactions, balance, categories)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-40" vertex="1">
           <mxGeometry y="398" width="462.5" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="qeCgsQrjXM8rQXqWp_c4-114" value="+ save&lt;span style=&quot;background-color: initial;&quot;&gt;()&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-40" vertex="1">
+        <mxCell id="KKIXsnw3pcvj2r7BcClb-0" value="&lt;u&gt;+ create(loginController, email): User&lt;/u&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qeCgsQrjXM8rQXqWp_c4-40">
           <mxGeometry y="424" width="462.5" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qeCgsQrjXM8rQXqWp_c4-114" value="+ save&lt;span style=&quot;background-color: initial;&quot;&gt;()&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="qeCgsQrjXM8rQXqWp_c4-40" vertex="1">
+          <mxGeometry y="450" width="462.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="qeCgsQrjXM8rQXqWp_c4-50" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="qeCgsQrjXM8rQXqWp_c4-9" target="qeCgsQrjXM8rQXqWp_c4-40" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
