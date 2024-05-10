@@ -4,10 +4,10 @@ const { transpile } = require("typescript");
 module.exports = {
   mode: "production",
   entry: {
-    common: path.resolve(__dirname, "./src/common.ts"),
-    dashboard: path.resolve(__dirname, "./src/dashboard.ts"),
-    form: path.resolve(__dirname, "./src/form.ts"),
-    homepage: path.resolve(__dirname, "./src/homepage.ts"),
+    common: path.resolve(__dirname, "./src/common/main.ts"),
+    dashboard: path.resolve(__dirname, "./src/dashboard/main.ts"),
+    form: path.resolve(__dirname, "./src/form/main.ts"),
+    homepage: path.resolve(__dirname, "./src/homepage/main.ts"),
   },
   module: {
     rules: [
