@@ -1,10 +1,13 @@
 import User from "../common/Classes/User";
 import PageController from "../common/Interfaces/PageController";
+import LoginController from "../common/LoginController";
 
-export default class LoginPageController implements PageController {
+export default class LoginPageController {
+    loginController: LoginController;
 
-    public run(user: User): void {
-        console.log("Running DashboardPageController");
+    constructor() {
+        this.loginController = new LoginController();
+        // ...
     }
     
 }

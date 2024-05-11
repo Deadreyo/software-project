@@ -6,5 +6,5 @@ common();
 
 const page = new HomePageController();
 
-new LoginController(page);
+LoginController.activatePage(page);
 

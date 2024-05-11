@@ -54,7 +54,7 @@ export default class User {
     }
 
     public async save() {
-        // await this.loginController.saveUser(this);
+        await this.loginController.saveUser();
     }
 
     private constructor(loginController: LoginController) {
@@ -93,7 +93,7 @@ export default class User {
     /**
      * Constructor for creating a new user
      */
-    static async create(loginController: LoginController, email: string) {
+    static create(loginController: LoginController, email: string) {
         const user = new User(loginController);
         user.email = email;
         return user;

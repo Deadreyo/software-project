@@ -5,4 +5,4 @@ common();
 
 const page = new DashboardPageController();
 
-new LoginController(page);
+LoginController.activatePage(page);
