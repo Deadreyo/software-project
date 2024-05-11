@@ -8,6 +8,7 @@ module.exports = {
     dashboard: path.resolve(__dirname, "./src/dashboard/main.ts"),
     form: path.resolve(__dirname, "./src/form/main.ts"),
     homepage: path.resolve(__dirname, "./src/homepage/main.ts"),
+    login: path.resolve(__dirname, "./src/login/main.ts"),
   },
   module: {
     rules: [

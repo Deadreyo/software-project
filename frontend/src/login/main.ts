@@ -1,9 +1,9 @@
 import LoginController from "../common/LoginController";
 import common from "../common/main"
-import FormPageController from "./FormPageController";
+import LoginPageController from "./LoginPageController";
 common();
 
 
-const page = new FormPageController();
+const page = new LoginPageController();
 
 new LoginController(page);

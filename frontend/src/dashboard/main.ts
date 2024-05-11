@@ -1,4 +1,8 @@
+import LoginController from "../common/LoginController";
 import common from "../common/main"
+import DashboardPageController from "./DashboardPageController";
 common();
 
-alert("wtf")
+const page = new DashboardPageController();
+
+new LoginController(page);
