@@ -1,0 +1,81 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#search-bar {
+  background-image: url("./icons/searchicon.png");
+  background-position: 10px 11px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  width: 70%;
+}
+
+#search-bar::placeholder {
+  color: #999;
+}
+
+/* button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+} */
+
+.transaction-table {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+}
+
+tbody td {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.delete-btn {
+  color: red;
+  cursor: pointer;
+}
