@@ -36,6 +36,7 @@ export default class FormPageController implements PageController {
     handleSubmit(event: Event, user: User) {
         event.preventDefault();
 
+        const warningMessage = document.getElementById('warning') as HTMLParagraphElement;
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
         const nameInput = document.getElementById('name') as HTMLInputElement;
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
@@ -63,11 +64,9 @@ export default class FormPageController implements PageController {
         };
 
 
-        let transactionObj: OneTimeTransaction | PeriodicTransaction;
         if (transactionPeriodSelect.value === 'once') {
             const dateInput = document.getElementById('date') as HTMLInputElement;
             transaction.date = dateInput.valueAsNumber;
-            transactionObj = OneTimeTransaction.create(user, transaction)
 
         } else if (transactionPeriodSelect.value === 'periodic') {
             const startDateInput = document.getElementById('startDate') as HTMLInputElement;
@@ -81,8 +80,22 @@ export default class FormPageController implements PageController {
             transaction.executionLimit = parseInt(executionLimitInput.value);
             transaction.numberOfExecutions = parseInt(numberOfExecutionsInput.value);
             transaction.lastExecutionDate = lastExecutionDateInput.valueAsNumber;
+        }
+
+        let msg = this.validateTransaction(transaction, transactionPeriodSelect.value)
+        if (msg !== null) {
+            warningMessage.textContent = msg;
+            warningMessage.style.visibility = 'visible';
+            return;
+        }
+
+        let transactionObj: OneTimeTransaction | PeriodicTransaction;
+        if (transactionPeriodSelect.value === 'once') {
+            transactionObj = OneTimeTransaction.create(user, transaction)
+        } else if (transactionPeriodSelect.value === 'periodic') {
             transactionObj = PeriodicTransaction.create(user, transaction)
         }
+
 
         console.log("transaction from form");
         console.log(transaction)
@@ -96,5 +109,46 @@ export default class FormPageController implements PageController {
         // Reset form fields after submission (Uncomment later for ease of use)
         // (document.getElementById('paymentForm') as HTMLFormElement).reset();
         this.handleTransactionPeriodChange(); // To reset visibility of fields
+    }
+
+    validateTransaction(transaction: any, transactionPeriod: string): string | null {
+        if (transaction.name.trim() === '') {
+            return 'Name cannot be empty';
+        }
+        if (!transaction.amount || isNaN(transaction.amount) || transaction.amount <= 0) {
+            return 'Amount must be a positive number';
+        }
+        if (transaction.source.trim() === '') {
+            return 'Source cannot be empty';
+        }
+        if (transaction.destination.trim() === '') {
+            return 'Destination cannot be empty';
+        }
+        if (transactionPeriod === 'once') {
+            if (!transaction.date || isNaN(transaction.date)) {
+                return 'Date is required for one-time transaction';
+            }
+        } else if (transactionPeriod === 'periodic') {
+            if (!transaction.startDate || isNaN(transaction.startDate)) {
+                return 'Start date is required for periodic transaction';
+            }
+            if (!transaction.interval || isNaN(transaction.interval) || transaction.interval <= 0) {
+                return 'Interval must be a positive number';
+            }
+            if (isNaN(transaction.executionLimit) || transaction.executionLimit <= 0) {
+                return 'Execution limit must be a positive number';
+            }
+            if (!transaction.numberOfExecutions || isNaN(transaction.numberOfExecutions) || transaction.numberOfExecutions <= 0) {
+                return 'Number of executions must be a positive number';
+            }
+            if (!transaction.lastExecutionDate || isNaN(transaction.lastExecutionDate)) {
+                return 'Last execution date is required for periodic transaction';
+            }
+            if (new Date(transaction.lastExecutionDate) <= new Date(transaction.startDate)) {
+                return 'Last execution date cannot be earlier than or equal to start date';
+            }
+        }
+
+        return null;
     }
 }
