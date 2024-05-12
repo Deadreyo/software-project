@@ -1,4 +1,6 @@
 import User from "../common/Classes/User";
+import OneTimeTransaction from "../common/Classes/OneTimeTransaction";
+import PeriodicTransaction from "../common/Classes/PeriodicTransaction";
 import PageController from "../common/Interfaces/PageController";
 import { PaymentMethod, TransactionType } from "../common/Classes/Transaction";
 
@@ -10,7 +12,7 @@ export default class FormPageController implements PageController {
 
         transactionPeriodSelect.value = 'once';
 
-        form.addEventListener('submit', (event) => this.handleSubmit(event));
+        form.addEventListener('submit', (event) => this.handleSubmit(event, user));
         transactionPeriodSelect.addEventListener('change', () => this.handleTransactionPeriodChange());
     }
 
@@ -31,7 +33,7 @@ export default class FormPageController implements PageController {
         }
     }
 
-    handleSubmit(event: Event) {
+    handleSubmit(event: Event, user: User) {
         event.preventDefault();
 
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
@@ -61,9 +63,12 @@ export default class FormPageController implements PageController {
         };
 
 
+        let transactionObj: OneTimeTransaction | PeriodicTransaction;
         if (transactionPeriodSelect.value === 'once') {
             const dateInput = document.getElementById('date') as HTMLInputElement;
             transaction.date = dateInput.valueAsNumber;
+            transactionObj = OneTimeTransaction.create(user, transaction)
+
         } else if (transactionPeriodSelect.value === 'periodic') {
             const startDateInput = document.getElementById('startDate') as HTMLInputElement;
             const intervalInput = document.getElementById('interval') as HTMLInputElement;
@@ -76,12 +81,20 @@ export default class FormPageController implements PageController {
             transaction.executionLimit = parseInt(executionLimitInput.value);
             transaction.numberOfExecutions = parseInt(numberOfExecutionsInput.value);
             transaction.lastExecutionDate = lastExecutionDateInput.valueAsNumber;
+            transactionObj = PeriodicTransaction.create(user, transaction)
         }
 
-        console.log(transaction);
+        console.log("transaction from form");
+        console.log(transaction)
+        console.log("transaction from Transaction object");
+        console.log(transactionObj.toJSON());
 
-        // Reset form fields after submission
-        (document.getElementById('paymentForm') as HTMLFormElement).reset();
+        let myTransactions = JSON.parse(localStorage.getItem("transactions") || "[]");
+        myTransactions.push(transactionObj.toJSON())
+        localStorage.setItem("transactions", JSON.stringify(myTransactions))
+
+        // Reset form fields after submission (Uncomment later for ease of use)
+        // (document.getElementById('paymentForm') as HTMLFormElement).reset();
         this.handleTransactionPeriodChange(); // To reset visibility of fields
     }
 }
