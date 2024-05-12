@@ -17,6 +17,10 @@ h1 {
   margin-bottom: 20px;
 }
 
+h2 {
+  text-align: left;
+}
+
 form {
   display: flex;
   justify-content: center;

@@ -6,6 +6,7 @@ export default class LoginController {
     private user: User;
     private dbKey: string = "userDatabase"
     private savedUserKey: string = "savedUser"
+    private debug: boolean = true
     
     signUp(email: string, password: string) {
         this.user = User.create(this, email)
@@ -39,6 +40,12 @@ export default class LoginController {
         }
     }
 
+    createGuestUser() {
+        const exampleMail = "mail@example.com"
+        const dummyPassword = "password123"
+        this.signUp(exampleMail, dummyPassword)
+    }
+
     logout() {
         localStorage.removeItem(this.savedUserKey)
         window.location.href = "./login.html"
@@ -46,6 +53,10 @@ export default class LoginController {
 
     checkSavedUser() {
         const savedUser = localStorage.getItem(this.savedUserKey)
+        if (!savedUser && this.debug) {
+            this.createGuestUser()
+            return
+        }
         if (!savedUser) {
             window.location.href = "./login.html"
             return
