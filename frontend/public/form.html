@@ -3,19 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Transaction Form</title>
     <link rel="stylesheet" href="./static/css/global.css">
     <link rel="stylesheet" href="./static/css/form.css">
     <script src="./static/bundle/common.js" defer></script>
     <script src="./static/bundle/form.js" defer></script>
 </head>
 <body>
-    <p>Hello world</p>
-    <p>
-        Count: <span id="count">0</span>
-        <button id="increment">+</button> 
-        <button id="decrement">-</button>
-    </p>
+    <p>Transaction Form</p>
+
+    <form method="POST" id="paymentForm">
+        <label for="transactionPeriod">Transaction Period:</label><br>
+        <select id="transactionPeriod" name="transactionPeriod">
+            <option value="once" selected>Once</option>
+            <option value="periodic">Periodic</option>
+        </select><br><br>
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+    
+        <label for="type">Type:</label><br>
+        <select id="type" name="type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select><br><br>
+    
+        <label for="paymentMethod">Payment Method:</label><br>
+        <select id="paymentMethod" name="paymentMethod">
+            <option value="cash">Cash</option>
+            <option value="visa">Visa</option>
+        </select><br><br>
+    
+        <label for="creationDate">Creation Date:</label><br>
+        <input type="date" id="creationDate" name="creationDate"><br><br>
+    
+        <label for="amount">Amount:</label><br>
+        <input type="number" id="amount" name="amount"><br><br>
+    
+        <label for="category">Category:</label><br>
+        <input type="text" id="category" name="category"><br><br>
+    
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description"><br><br>
+    
+        <label for="source">Source:</label><br>
+        <input type="text" id="source" name="source"><br><br>
+    
+        <label for="destination">Destination:</label><br>
+        <input type="text" id="destination" name="destination"><br><br>
+    
+        <div id="dateFields">
+            <label for="date">Date:</label><br>
+            <input type="date" id="date" name="date"><br><br>
+        </div>
+    
+        <div id="periodicFields" style="display:none;">
+            <label for="startDate">Start Date:</label><br>
+            <input type="date" id="startDate" name="startDate"><br><br>
+    
+            <label for="interval">Interval:</label><br>
+            <input type="number" id="interval" name="interval"><br><br>
+    
+            <label for="executionLimit">Execution Limit:</label><br>
+            <input type="number" id="executionLimit" name="executionLimit"><br><br>
+    
+            <label for="numberOfExecutions">Number of Executions:</label><br>
+            <input type="number" id="numberOfExecutions" name="numberOfExecutions"><br><br>
+    
+            <label for="lastExecutionDate">Last Execution Date:</label><br>
+            <input type="date" id="lastExecutionDate" name="lastExecutionDate"><br><br>
+        </div>
+
+        <label for="ended">Ended:</label><br>
+        <input type="checkbox" id="ended" name="ended"><br><br>
+    
+        <input type="submit" value="Submit">
+    </form>
+
     
 </body>
 </html>
