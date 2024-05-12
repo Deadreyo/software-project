@@ -50,6 +50,9 @@ export default class OneTimeTransaction extends Transaction {
         paymentMethod: PaymentMethod;
         amount: number;
         date: number;
+        description?: string;
+        source?: string;
+        destination?: string;
       }): OneTimeTransaction {
         const trans = new OneTimeTransaction(owner);
         trans.name = props.name;
@@ -57,6 +60,9 @@ export default class OneTimeTransaction extends Transaction {
         trans.paymentMethod = props.paymentMethod;
         trans.amount = props.amount;
         trans.date = props.date;
+        trans.description = props.description || '';
+        trans.source = props.source || '';
+        trans.destination = props.destination || '';
         return trans;
     }
 }
