@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <link rel="stylesheet" href="./static/css/global.css">
     <link rel="stylesheet" href="./static/css/login.css">
     <script src="./static/bundle/common.js" defer></script>
     <script src="./static/bundle/login.js" defer></script>
 </head>
 <body>
-    <p>Hello world</p>
-    <p>
-        Count: <span id="count">0</span>
-        <button id="increment">+</button> 
-        <button id="decrement">-</button>
-    </p>
+    <p>Login Page</p>
+
+    <p id="warning" style="color: red; visibility: hidden;">Warning</p>
+
+    <form method="POST" id="paymentForm">
+        <label for="name">Email:</label><br>
+        <input type="text" id="email" name="email"><br><br>
+    
+        <label for="type">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+    
+        <input type="submit" value="Submit">
+    </form>
     
 </body>
 </html>

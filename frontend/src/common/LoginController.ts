@@ -8,7 +8,7 @@ export default class LoginController {
     private savedUserKey: string = "savedUser"
     
     signUp(email: string, password: string) {
-        User.create(this, email)
+        this.user = User.create(this, email)
         localStorage.setItem(this.dbKey, JSON.stringify({
             ...this.user.toJSON(),
             password
