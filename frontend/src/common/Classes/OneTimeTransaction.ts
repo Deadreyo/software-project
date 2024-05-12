@@ -53,6 +53,7 @@ export default class OneTimeTransaction extends Transaction {
         description?: string;
         source?: string;
         destination?: string;
+        category?: string[];
       }): OneTimeTransaction {
         const trans = new OneTimeTransaction(owner);
         trans.name = props.name;
@@ -63,6 +64,7 @@ export default class OneTimeTransaction extends Transaction {
         trans.description = props.description || '';
         trans.source = props.source || '';
         trans.destination = props.destination || '';
+        trans.category = props.category || [];
         return trans;
     }
 }
