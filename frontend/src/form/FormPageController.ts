@@ -41,26 +41,22 @@ export default class FormPageController implements PageController {
         const nameInput = document.getElementById('name') as HTMLInputElement;
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
         const paymentSelect = document.getElementById('paymentMethod') as HTMLSelectElement;
-        const creationDateInput = document.getElementById('creationDate') as HTMLInputElement;
         const amountInput = document.getElementById('amount') as HTMLInputElement;
         const categoryInput = document.getElementById('category') as HTMLInputElement;
         const descriptionInput = document.getElementById('description') as HTMLInputElement;
         const sourceInput = document.getElementById('source') as HTMLInputElement;
         const destinationInput = document.getElementById('destination') as HTMLInputElement;
-        const endedCheckbox = document.getElementById('ended') as HTMLInputElement;
 
 
         const transaction: any = {
             name: nameInput.value,
             type: typeSelect.value as TransactionType,
             paymentMethod: paymentSelect.value as PaymentMethod,
-            creationDate: creationDateInput.valueAsNumber,
             amount: parseFloat(amountInput.value),
             category: categoryInput.value.split(','),
             description: descriptionInput.value,
             source: sourceInput.value,
             destination: destinationInput.value,
-            ended: endedCheckbox.checked
         };
 
 
@@ -72,14 +68,10 @@ export default class FormPageController implements PageController {
             const startDateInput = document.getElementById('startDate') as HTMLInputElement;
             const intervalInput = document.getElementById('interval') as HTMLInputElement;
             const executionLimitInput = document.getElementById('executionLimit') as HTMLInputElement;
-            const numberOfExecutionsInput = document.getElementById('numberOfExecutions') as HTMLInputElement;
-            const lastExecutionDateInput = document.getElementById('lastExecutionDate') as HTMLInputElement;
 
             transaction.startDate = startDateInput.valueAsNumber;
             transaction.interval = parseInt(intervalInput.value);
             transaction.executionLimit = parseInt(executionLimitInput.value);
-            transaction.numberOfExecutions = parseInt(numberOfExecutionsInput.value);
-            transaction.lastExecutionDate = lastExecutionDateInput.valueAsNumber;
         }
 
         let msg = this.validateTransaction(transaction, transactionPeriodSelect.value)
@@ -118,12 +110,6 @@ export default class FormPageController implements PageController {
         if (!transaction.amount || isNaN(transaction.amount) || transaction.amount <= 0) {
             return 'Amount must be a positive number';
         }
-        if (transaction.source.trim() === '') {
-            return 'Source cannot be empty';
-        }
-        if (transaction.destination.trim() === '') {
-            return 'Destination cannot be empty';
-        }
         if (transactionPeriod === 'once') {
             if (!transaction.date || isNaN(transaction.date)) {
                 return 'Date is required for one-time transaction';
@@ -137,15 +123,6 @@ export default class FormPageController implements PageController {
             }
             if (isNaN(transaction.executionLimit) || transaction.executionLimit <= 0) {
                 return 'Execution limit must be a positive number';
-            }
-            if (!transaction.numberOfExecutions || isNaN(transaction.numberOfExecutions) || transaction.numberOfExecutions <= 0) {
-                return 'Number of executions must be a positive number';
-            }
-            if (!transaction.lastExecutionDate || isNaN(transaction.lastExecutionDate)) {
-                return 'Last execution date is required for periodic transaction';
-            }
-            if (new Date(transaction.lastExecutionDate) <= new Date(transaction.startDate)) {
-                return 'Last execution date cannot be earlier than or equal to start date';
             }
         }
 
