@@ -1,10 +1,13 @@
-import OneTimeTransaction from "../common/Classes/OneTimeTransaction";
+import { walkUpBindingElementsAndPatterns } from "typescript";
 import Transaction from "../common/Classes/Transaction";
 import User from "../common/Classes/User";
 import PageController from "../common/Interfaces/PageController";
 
 export default class DashboardPageController implements PageController {
-  private amountSpentSpan: HTMLElement
+  private totalSpentSpan: HTMLElement
+  private totalIncomeSpan: HTMLElement
+  private addPaymentButton: HTMLButtonElement
+
   private transactionsTable: HTMLTableElement
   private user: User
   private userTransactions: Array<Transaction>
@@ -12,32 +15,30 @@ export default class DashboardPageController implements PageController {
   public run(user: User): void {
     this.user = user
     
-    this.transactionsTable = <HTMLTableElement>document.getElementById("trans-table")
-    this.amountSpentSpan = document.getElementById("amount");
-    this.createDummyPayments()
+    this.addPaymentButton = document.getElementById("add-payment") as HTMLButtonElement
+    this.addPaymentButton.addEventListener("click", this.handleAddPayment)
+
+    this.transactionsTable = document.getElementById("trans-table") as HTMLTableElement
+    this.totalSpentSpan = document.getElementById("spent-amount")
+    this.totalIncomeSpan = document.getElementById("income-amount")
 
     this.userTransactions = this.user.getAllTransactions()
-    const totalSpent =this.userTransactions.reduce((prev, current) => {
-      return prev + current.getAmount()
+    const totalSpent = this.userTransactions.reduce((prev, current) => {
+      if (current.getType() === "expense")
+        return prev + current.getAmount()
+
+      return prev + 0
+    }, 0)
+    const totalIncome = this.userTransactions.reduce((prev, current) => {
+      if (current.getType() === "income")
+        return prev + current.getAmount()
+
+      return prev + 0
     }, 0)
 
-    this.amountSpentSpan.textContent = totalSpent + ""
+    this.totalSpentSpan.textContent = totalSpent + ""
+    this.totalIncomeSpan.textContent = totalIncome + ""
     this.fillTransactionTable()
-  }
-
-  public createDummyPayments(): void {
-    for (let i = 0; i < 10; i++) {
-      OneTimeTransaction.create(
-        this.user,
-        {
-          name: "hey",
-          type: "income",
-          paymentMethod: "visa",
-          amount: Math.floor(Math.random() * (1000 - 100 + 1) + 100),
-          date: 12
-        }
-      )
-    }
   }
 
   public handleDelete(): void {}
@@ -47,6 +48,10 @@ export default class DashboardPageController implements PageController {
   public handleExpand(): void {}
 
   public search(): void {}
+
+  public handleAddPayment(): void {
+    window.location.href = "./form.html"
+  }
 
   public fillTransactionTable(): void {
     this.userTransactions.forEach((transaction, index) => {
@@ -59,8 +64,6 @@ export default class DashboardPageController implements PageController {
         return prev + current + ","
       }, "")
       row.insertCell().textContent = new Date(transaction.getCreationDate()).toDateString()
-
-
     })
   }
 }

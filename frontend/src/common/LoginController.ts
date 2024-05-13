@@ -6,7 +6,7 @@ export default class LoginController {
     private user: User;
     private dbKey: string = "userDatabase"
     private savedUserKey: string = "savedUser"
-    private debug: boolean = true
+    private debug: boolean = false
     
     signUp(email: string, password: string) {
         this.user = User.create(this, email)
