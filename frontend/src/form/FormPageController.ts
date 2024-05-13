@@ -9,11 +9,17 @@ export default class FormPageController implements PageController {
     public run(user: User): void {
         const form = document.getElementById('paymentForm') as HTMLFormElement;
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
+        const typeSelect = document.getElementById('type') as HTMLSelectElement;
 
         transactionPeriodSelect.value = 'once';
+        typeSelect.value = 'expense';
+
+        this.handleTypeChange();
+        this.handleTransactionPeriodChange();
 
         form.addEventListener('submit', (event) => this.handleSubmit(event, user));
         transactionPeriodSelect.addEventListener('change', () => this.handleTransactionPeriodChange());
+        typeSelect.addEventListener('change', () => this.handleTypeChange());
     }
 
     handleTransactionPeriodChange() {
@@ -30,6 +36,26 @@ export default class FormPageController implements PageController {
         } else {
             dateFields.style.display = 'none';
             periodicFields.style.display = 'none';
+        }
+    }
+
+    handleTypeChange() {
+        const typeSelect = document.getElementById('type') as HTMLSelectElement;
+        const sourceField = document.getElementById('sourceField') as HTMLElement;
+        const destinationField = document.getElementById('destinationField') as HTMLElement;
+        const sourceInput = document.getElementById('source') as HTMLInputElement;
+        const destinationInput = document.getElementById('destination') as HTMLInputElement;
+
+        if (typeSelect.value === 'expense') {
+            sourceInput.value = 'Me';
+            sourceField.style.display = 'none';
+            destinationInput.value = '';
+            destinationField.style.display = 'block';
+        } else if (typeSelect.value === 'income') {
+            sourceInput.value = '';
+            sourceField.style.display = 'block';
+            destinationInput.value = 'Me';
+            destinationField.style.display = 'none';
         }
     }
 
