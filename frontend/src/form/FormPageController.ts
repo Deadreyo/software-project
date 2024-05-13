@@ -88,15 +88,7 @@ export default class FormPageController implements PageController {
             transactionObj = PeriodicTransaction.create(user, transaction)
         }
 
-
-        console.log("transaction from form");
-        console.log(transaction)
-        console.log("transaction from Transaction object");
-        console.log(transactionObj.toJSON());
-
-        let myTransactions = JSON.parse(localStorage.getItem("transactions") || "[]");
-        myTransactions.push(transactionObj.toJSON())
-        localStorage.setItem("transactions", JSON.stringify(myTransactions))
+        user.addTransaction(transactionObj);
 
         // Reset form fields after submission (Uncomment later for ease of use)
         // (document.getElementById('paymentForm') as HTMLFormElement).reset();
