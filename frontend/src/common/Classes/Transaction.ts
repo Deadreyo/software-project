@@ -94,7 +94,6 @@ export default abstract class Transaction {
 
   protected constructor(user: User) {
     this.owner = user;
-    this.owner.addTransaction(this);
   }
 
   protected load(props: TransactionBaseSave) {
