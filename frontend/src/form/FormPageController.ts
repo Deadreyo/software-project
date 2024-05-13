@@ -47,13 +47,16 @@ export default class FormPageController implements PageController {
         const sourceInput = document.getElementById('source') as HTMLInputElement;
         const destinationInput = document.getElementById('destination') as HTMLInputElement;
 
+        let categories = categoryInput.value.split(",").map((item: string) => item.trim());
+        let newCategories = categories.filter(category => !user.getCategories().includes(category))
+        newCategories.forEach(category => user.addCategory(category));
 
         const transaction: any = {
             name: nameInput.value,
             type: typeSelect.value as TransactionType,
             paymentMethod: paymentSelect.value as PaymentMethod,
             amount: parseFloat(amountInput.value),
-            category: categoryInput.value.split(','),
+            category: categories,
             description: descriptionInput.value,
             source: sourceInput.value,
             destination: destinationInput.value,
