@@ -26,12 +26,22 @@ export default abstract class Transaction {
     return this.type;
   }
 
+  public setType(type: TransactionType) {
+    this.type = type;
+    this.save();
+  }
+
   public getPaymentMethod() {
     return this.paymentMethod;
   }
 
   public getCreationDate() {
     return this.creationDate;
+  }
+
+  public setCreationDate(date: number) {
+    this.creationDate = date;
+    this.save();
   }
 
   public isEnded() {

@@ -23,13 +23,6 @@
           placeholder="Search by Name or Category"
         />
       </form>
-      <!-- <div class="header">
-        <div class="finance-info">
-          <h3>Total Spent: <span id="spent-amount">0</span></h3>
-          <h3>Month Income: <span id="income-amount">0</span></h3>
-        </div>
-        <button id="add-payment" class="header-button">Add Payment</button>
-      </div> -->
       <div class="total-amount">
         <div>
           <strong>Income:</strong>
@@ -54,6 +47,67 @@
           </thead>
           <tbody id="transaction-list"></tbody>
         </table>
+      </div>
+    </div>
+    <div id="editFormModal" class="modal">
+      <div class="box">
+        <form id="editForm">
+          <div class="form-header">
+            <button id="close-btn" type="button" class="close-button">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="item">
+            <label for="editName">Name:</label>
+            <input
+              class="form-field"
+              type="text"
+              id="editName"
+              name="name"
+              required
+            />
+          </div>
+          <div class="item">
+            <label for="editAmount">Amount:</label>
+            <input
+              class="form-field"
+              type="number"
+              id="editAmount"
+              name="amount"
+              required
+            />
+          </div>
+          <div class="item">
+            <label for="editType">Type:</label>
+            <select class="form-field" id="editType" name="type">
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+          <div class="item">
+            <label for="editCategory">Category:</label>
+            <input
+              class="form-field"
+              type="text"
+              id="editCategory"
+              name="category"
+              required
+            />
+          </div>
+          <div class="item">
+            <label for="editDate">Date:</label>
+            <input
+              class="form-field"
+              type="date"
+              id="editDate"
+              name="date"
+              required
+            />
+          </div>
+          <div class="btn-block">
+            <button type="button" id="save-btn">Save</button>
+          </div>
+        </form>
       </div>
     </div>
   </body>
