@@ -18,7 +18,6 @@ export default class FormPageController implements PageController {
         this.chipInput = document.getElementById("chipInput") as HTMLInputElement;
         this.addChipBtn = document.getElementById("addChipBtn") as HTMLButtonElement;
         this.chipsContainer = document.getElementById("chipsContainer") as HTMLElement;
-        //this.addChipBtn.addEventListener("click", () => this.addChip());
         this.logoutButton = document.getElementById("logoutButton");
     }
     public run(user: User): void {
@@ -32,11 +31,13 @@ export default class FormPageController implements PageController {
 
         this.handleTypeChange(null);
         this.handleTransactionPeriodChange();
+        this.addChipBtn.addEventListener("click", (event) => this.addChip(event));
         submitButton.addEventListener('click', (event) => this.handleSubmit(event, this.user));
         transactionPeriodSelect.addEventListener('change', () => this.handleTransactionPeriodChange());
         typeSelect.addEventListener('change', (event) => this.handleTypeChange(event));
     }
-    private addChip(): void {
+    private addChip(event): void {
+        event.preventDefault();
         const chipText = this.chipInput.value.trim();
         if (chipText) {
             this.value.push(chipText);
@@ -69,12 +70,12 @@ export default class FormPageController implements PageController {
         const chipText = document.createElement("span");
         chipText.textContent = text;
 
-        // Create close button
+        //  close button
         const chipCloseBtn = document.createElement("button");
         chipCloseBtn.innerHTML = "&times;";
         chipCloseBtn.classList.add("ml-2", "text-gray-500", "hover:text-gray-700", "focus:outline-none", "text-sm");
 
-        // Style the close button on hover
+        // Style
         chipCloseBtn.addEventListener("mouseenter", () => {
             chipCloseBtn.classList.replace("text-gray-500", "text-red-500");
         });
@@ -144,12 +145,11 @@ export default class FormPageController implements PageController {
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
         const paymentSelect = document.getElementById('paymentMethod') as HTMLSelectElement;
         const amountInput = document.getElementById('amount') as HTMLInputElement;
-        const categoryInput = document.getElementById('category') as HTMLInputElement;
         const descriptionInput = document.getElementById('description') as HTMLInputElement;
         const sourceInput = document.getElementById('source') as HTMLInputElement;
         const destinationInput = document.getElementById('destination') as HTMLInputElement;
 
-        let categories = categoryInput.value.split(",").map((item: string) => item.trim());
+        let categories = this.value;
         let newCategories = categories.filter(category => !user.getCategories().includes(category))
         newCategories.forEach(category => user.addCategory(category));
 
