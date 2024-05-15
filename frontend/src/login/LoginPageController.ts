@@ -39,6 +39,10 @@ export default class LoginPageController {
                 alert("Passwords do not match");
                 return;
             }
+            if (!this.validatepassword(password)){
+                alert("Password must contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long");
+                return;
+            }
 
             this.signUp(username, email, password);
         });
@@ -58,5 +62,9 @@ export default class LoginPageController {
             this.loginController.logout();
 
         });
+    }
+    private validatepassword(password: string){
+        const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+        return passwordRegex.test(password);
     }
 }
