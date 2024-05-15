@@ -4,7 +4,6 @@ import PeriodicTransaction from "../common/Classes/PeriodicTransaction";
 import PageController from "../common/Interfaces/PageController";
 import { PaymentMethod, TransactionType } from "../common/Classes/Transaction";
 
-
 export default class FormPageController implements PageController {
     private value: string[] = [];
     private user: User
@@ -21,6 +20,7 @@ export default class FormPageController implements PageController {
         this.logoutButton = document.getElementById("logoutButton");
     }
     public run(user: User): void {
+
         this.user = user
         const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
@@ -102,7 +102,6 @@ export default class FormPageController implements PageController {
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
         const dateFields = document.getElementById('dateFields') as HTMLElement;
         const periodicFields = document.getElementById('periodicFields') as HTMLElement;
-
         if (transactionPeriodSelect.value === 'once') {
             dateFields.style.display = 'block';
             periodicFields.style.display = 'none';
