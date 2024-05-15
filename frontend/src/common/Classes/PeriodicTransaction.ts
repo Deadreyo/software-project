@@ -90,6 +90,10 @@ export default class PeriodicTransaction extends Transaction {
     startDate: number;
     interval: number;
     executionLimit?: number;
+    description?: string;
+    source?: string;
+    destination?: string;
+    category?: string[];
   }): PeriodicTransaction {
     const trans = new PeriodicTransaction(owner);
     trans.name = props.name;
@@ -99,6 +103,10 @@ export default class PeriodicTransaction extends Transaction {
     trans.startDate = props.startDate;
     trans.interval = props.interval;
     trans.executionLimit = props.executionLimit || Number.MAX_SAFE_INTEGER;
+    trans.description = props.description || '';
+    trans.source = props.source || '';
+    trans.destination = props.destination || '';
+    trans.category = props.category || [];
     return trans;
   }
 }

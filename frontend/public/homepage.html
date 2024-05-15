@@ -8,14 +8,126 @@
     <link rel="stylesheet" href="./static/css/homepage.css">
     <script src="./static/bundle/common.js" defer></script>
     <script src="./static/bundle/homepage.js" defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> -->
 </head>
 <body>
-    <p>Hello world</p>
-    <p>
-        Count: <span id="count">0</span>
-        <button id="increment">+</button> 
-        <button id="decrement">-</button>
-    </p>
-    
+    <!-- <div class="header">
+        <div class="logo">EXPENSE TRACKER</div>
+        <div id="menu" class="left-side">
+            <button id="close" class="close-btn">&#9587;</button>
+            <ul class="nav-list">
+                <li><a href="/frontend/public/homepage.html">HOME</a></li>
+                <li><a href="">MY EXPENSES</a></li>
+                <li><a href="">MORE</a></li>
+            </ul>
+            <div class="account">
+                <div class="acc-name">Login</div>
+                <img class="account-image" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="">
+            </div>
+        </div>
+        <div id="burger" class="burger">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+        </div>
+    </div> -->
+
+    <div class="main">
+        <div class="general-info">
+            <div class="general-info-box">
+                <!-- <span class="material-symbols-outlined">
+                    calendar_month
+                </span> -->
+                <span class="" style="font-size: 1.1rem;">Next Payment in:</span>
+                <span style="color:green;">10:23:59:20</span>
+                <span class="" style="">Jun 05 2024</span>
+                <!-- <span>Nearest to Pay</span> -->
+            </div>
+            <div class="general-info-box">
+                <span class="material-symbols-outlined" style="color: #007bff;">
+                    receipt
+                </span>
+                <span>10</span>
+                <span>Number Of Expenses</span>
+            </div>
+            <div class="general-info-box">
+                <span class="material-symbols-outlined" style="color: #007bff;">
+                    currency_exchange
+                </span>
+                <div class="expense-income">
+                    <!-- <div style="border-right: 2px solid #000; padding-right: 15px;"> -->
+                    <div>
+                        <span style="color: rgb(35, 205, 35); color: green;">
+                            <span>+500</span>   
+                            <span class="material-symbols-outlined trending-arrow">
+                                trending_up
+                            </span>
+                        </span>
+                    </div>
+                    <div class="seperator"></div>
+                    <!-- <div style="border-left: 0px solid #000; padding-left: 15px;"> -->
+                    <div>
+                        <span style="color: red;">
+                            <Span>-100</Span>
+                            <span class="material-symbols-outlined trending-arrow">
+                                trending_down
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <span>Last Month</span>
+            </div>
+            <div class="general-info-box">
+                <span class="material-symbols-outlined" style="color: rgb(35, 205, 35); color: #007bff;">
+                    monetization_on
+                </span>
+                <span>
+                    <span style="font-size: 2rem;">400</span> EGP
+                </span>
+                <span>Total Amount</span>
+            </div>
+            <div class="general-info-box add-expense">
+                <button>
+                    Add Expense
+                    &#x2b;
+                </button>
+            </div>
+        </div>
+        <div class="graphs">
+            <div class="top-section">
+                <div class="category-summary">
+                    <h5>Category Summary</h5>
+                    <div class="pie-chart">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+                <div class="category-summary monthly-summary">
+                    <div class="chart-head">
+                        <h5>Monthly Summary</h5>
+                        <input type="date" class="date">
+                    </div>
+                    <div class="bar-chart">
+                        <canvas id="bar-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="second-section">
+                <div class="monthly-statistics">
+                    <div class="daily-stats-head">
+                        <h3>Monthly Rate</h3>
+                        <input type="date" class="date">
+                    </div>
+                    <div class="line-chart">
+                        <canvas id="line-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>
