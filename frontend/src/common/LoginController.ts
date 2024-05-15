@@ -8,13 +8,19 @@ export default class LoginController {
     private savedUserKey: string = "savedUser"
     
     signUp(email: string, password: string) {
-        User.create(this, email)
+        this.user = User.create(this, email)
         localStorage.setItem(this.dbKey, JSON.stringify({
             ...this.user.toJSON(),
             password
         }))
         localStorage.setItem(this.savedUserKey, JSON.stringify(this.user.toJSON()))
         window.location.href = "./homepage.html"
+    }
+
+    createGuestUser() {
+        const exampleMail = "mail@example.com"
+        const dummyPassword = "password123"
+        this.signUp(exampleMail, dummyPassword)
     }
     
     login(email: string, password: string) {

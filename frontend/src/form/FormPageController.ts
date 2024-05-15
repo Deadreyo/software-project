@@ -7,6 +7,7 @@ import { PaymentMethod, TransactionType } from "../common/Classes/Transaction";
 
 export default class FormPageController implements PageController {
     private value: string[] = [];
+    private user: User
     private chipInput: HTMLInputElement;
     private addChipBtn: HTMLButtonElement;
     private chipsContainer: HTMLElement;
@@ -17,23 +18,23 @@ export default class FormPageController implements PageController {
         this.chipInput = document.getElementById("chipInput") as HTMLInputElement;
         this.addChipBtn = document.getElementById("addChipBtn") as HTMLButtonElement;
         this.chipsContainer = document.getElementById("chipsContainer") as HTMLElement;
-        this.addChipBtn.addEventListener("click", () => this.addChip());
+        //this.addChipBtn.addEventListener("click", () => this.addChip());
         this.logoutButton = document.getElementById("logoutButton");
     }
     public run(user: User): void {
-        const form = document.getElementById('paymentForm') as HTMLFormElement;
-        console.log("Form")
+        this.user = user
+        const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
 
         transactionPeriodSelect.value = 'once';
         typeSelect.value = 'expense';
 
-        this.handleTypeChange();
+        this.handleTypeChange(null);
         this.handleTransactionPeriodChange();
-        form.addEventListener('submit', (event) => this.handleSubmit(event, user));
+        submitButton.addEventListener('click', (event) => this.handleSubmit(event, this.user));
         transactionPeriodSelect.addEventListener('change', () => this.handleTransactionPeriodChange());
-        typeSelect.addEventListener('change', () => this.handleTypeChange());
+        typeSelect.addEventListener('change', (event) => this.handleTypeChange(event));
     }
     private addChip(): void {
         const chipText = this.chipInput.value.trim();
@@ -113,7 +114,8 @@ export default class FormPageController implements PageController {
         }
     }
 
-    handleTypeChange() {
+    handleTypeChange(event) {
+        console.log("Select")
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
         const sourceField = document.getElementById('sourceField') as HTMLElement;
         const destinationField = document.getElementById('destinationField') as HTMLElement;
@@ -196,6 +198,8 @@ export default class FormPageController implements PageController {
         // Reset form fields after submission (Uncomment later for ease of use)
         // (document.getElementById('paymentForm') as HTMLFormElement).reset();
         this.handleTransactionPeriodChange(); // To reset visibility of fields
+
+        window.location.href = "./dashboard.html"
     }
 
     validateTransaction(transaction: any, transactionPeriod: string): string | null {

@@ -5,4 +5,4 @@ common();
 
 
 const page = new FormPageController();
-
+LoginController.activatePage(page);

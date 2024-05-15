@@ -15,7 +15,7 @@ export default class LoginPageController {
 
     private setupLoginForm() {
         const loginForm = document.getElementById("signinForm") as HTMLFormElement;
-        loginForm.addEventListener("submit", (event) => {
+        loginForm?.addEventListener("submit", (event) => {
             event.preventDefault();
             const email = (document.getElementById("login-email") as HTMLInputElement).value;
             const password = (document.getElementById("login-password") as HTMLInputElement).value;
@@ -28,7 +28,7 @@ export default class LoginPageController {
         const passwordInput2 = document.getElementById("password2") as HTMLInputElement;
         const signUpButton = document.getElementById("signup-button");
 
-        signUpButton.addEventListener("click", (event) => {
+        signUpButton?.addEventListener("click", (event) => {
             event.preventDefault();
             const username = (document.getElementById("signup-username") as HTMLInputElement).value;
             const email = (document.getElementById("signup-email") as HTMLInputElement).value;
@@ -54,7 +54,7 @@ export default class LoginPageController {
     private logout() {
         const logoutButton = document.getElementById("logoutButton");
 
-        logoutButton.addEventListener("click", () => {
+        logoutButton?.addEventListener("click", () => {
             this.loginController.logout();
 
         });

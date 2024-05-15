@@ -105,8 +105,8 @@
                                 <label for="type" class="block">Type</label>
                                 <div class="relative">
                                     <select id="type"  name="type" class="block appearance-none w-full bg-gray-50 border border-gray-300 px-4 py-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-indigo-500">
-                                        <option value="Income" selected>Income</option>
-                                        <option value="Expense">Expense</option>
+                                        <option value="income" selected>Income</option>
+                                        <option value="expense">Expense</option>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                         <!-- Heroicon name: solid/chevron-down -->
@@ -137,12 +137,12 @@
                                 <input type="number" name="amount" id="amount" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
                             </div>
 
-                            <div class="md:col-span-2">
+                            <div id="sourceField" class="md:col-span-2">
                                 <label for="Source">Source</label>
-                                <input type="text" name="Source" id="Source" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
+                                <input type="text" name="Source" id="source" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
                             </div>
 
-                            <div class="md:col-span-2">
+                            <div id="destinationField" class="md:col-span-2">
                                 <label for="destination">Destination</label>
                                 <input type="text" name="destination" id="destination" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
                             </div>
@@ -193,7 +193,7 @@
 
                             <div class="md:col-span-5 text-right">
                                 <div class="inline-flex items-end">
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                                    <button id="submit-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
                                 </div>
                             </div>
 
