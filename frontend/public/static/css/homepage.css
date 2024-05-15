@@ -1,0 +1,344 @@
+body{
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+    font-family: sans-serif;
+}
+
+.header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-color:  #0ac30a; */
+    /* background: linear-gradient(to bottom right,#0ac30a,#418441); */
+    background: linear-gradient(to bottom right,#1D4ED8,#007bff);
+    color: #fff;
+    height: 6vh;
+}
+
+.logo{
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.left-side{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.nav-list{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+.nav-list li{
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    transition: 0.5s;
+}
+
+.nav-list li a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-list li:hover{
+    background-color: #fff;
+    color: #000;
+    transition: 0.5s;
+}
+
+.account{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 5px;
+    color: #fff;
+}
+
+.account-image{
+    width: 5vh;
+    height: auto;
+    border-radius: 50%;
+}
+
+.burger{
+    display: none;
+    cursor: pointer;
+}
+
+.close-btn{
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: none;
+    color: #fff;
+    font-size: 3vh;
+    font-weight: bold;   
+    cursor: pointer;
+    display: none;
+}
+
+@media screen and (max-width:1250px) {
+    .logo{
+        font-size: 3vh;
+    }
+    
+    .burger{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        gap: 1vh;
+    }
+    
+    .burger div{
+        background-color: #fff;
+        border-radius: 4px;
+        width: 3vw;
+        height: 0.5vh;
+    }
+    .left-side{
+        position: fixed;
+        width: 100%;
+        transform: translateX(100%);
+        display: flex;
+        background-color: #0ac30a;
+        height: 100vh;
+        flex-direction: column-reverse;
+        /* flex-direction: column; */
+        justify-content: center;
+        align-items: center;
+        font-size: 3vh;
+        /* padding-bottom: 50vh; */
+        transition: 0.5s;
+        overflow: auto;
+    }
+
+    .nav-list{
+        flex-direction: column;
+        justify-content: none;
+        width: 100%;
+        height: 70%;
+        gap: 5vh;
+        align-items: center;
+    }
+
+    .nav-list li{
+        width: fit-content;
+    }
+
+    .account{
+        background-color: #1a901a;
+        width: 90%;
+        height: 10%;
+        margin-top: 5%;
+        border-radius: 10px;
+    }
+
+    .account-image{
+        width: 6vh;
+        height: auto;
+    }
+    .close-btn{
+        display: block;
+    }
+
+}
+
+.main{
+    margin-top: 5vh;
+    background-color: #f4f4f4;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.general-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.general-info-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: .5vh;
+    background-color: #fff;
+    color: #000;
+    box-shadow: 5px 5px 5px #e1e8ddda;
+    width: 17%;
+    height: 13vh;
+    border-radius: 10px;
+
+}
+
+.general-info-box span:last-child{
+    font-size: 1rem;
+}
+
+.expense-income{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    /* justify-content: space-evenly; */
+    align-items: center;
+    width: 100%;
+    /* height: 8vh; */
+}
+
+.expense-income span{
+    font-size: 1.8rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.trending-arrow{
+    font-size: 1.8rem !important;
+}
+
+.seperator{
+    height: 130%;
+    width: 2px;
+    background-color: #45583f;
+    /* transform: rotate(45deg); */
+}
+
+.add-expense{
+    
+    background: linear-gradient(to top,#0ac30a,#1b7d1b);
+    background: linear-gradient(to bottom right,#0ac30a,#245724);
+    background: linear-gradient(to bottom right,#1D4ED8,#007bff);
+    box-shadow: 5px 5px 5px #424640da;
+    transition: .4s;
+    cursor: pointer;
+}
+
+.add-expense:hover{
+    box-shadow: 5px 5px 10px #424640da;
+}
+
+.add-expense button{
+    border-radius: 0px;
+    background-color: transparent;
+    font-size: 2.4rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+@media screen and (max-width:1750px){
+    .general-info-box span{
+        font-size: 1.4rem;
+    }
+    .general-info-box span:last-child{
+        font-size: 1rem;
+    }
+    .trending-arrow{
+        font-size: 1.4rem !important;
+    }
+    .expense-income span{
+        font-size: 1rem !important;
+        display: flex;
+        flex-direction: row;
+    }
+    .add-expense button{
+        font-size: 1.8rem;
+    }
+
+}
+
+.graphs{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.top-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.category-summary{
+    width: 48%;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #e1e8ddda;
+}
+
+.category-summary h5{
+    text-align: left;
+}
+
+.pie-chart{
+    /* background-color: green; */
+    margin: auto;
+    width: 60%;
+}
+
+.bar-chart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+}
+
+.chart-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    /* background-color: #0ac30a; */
+}
+.date{
+    border: none;
+    font-size: 1.4rem;
+    border-bottom: 3px solid #0ac30a;
+    border-bottom: 3px solid #1D4ED8;
+    outline: none;
+}
+
+.monthly-statistics{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #e1e8ddda;
+    /* height: 50vh; */
+}
+
+.line-chart{
+    width: 70%;
+    margin: auto;
+}
+
+.daily-stats-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
