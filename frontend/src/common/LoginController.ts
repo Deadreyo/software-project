@@ -56,7 +56,6 @@ export default class LoginController {
     static activatePage(pageController: PageController) {
         const controller = new LoginController();
         controller.checkSavedUser()
-
         pageController.run(controller.user)
     }
 }

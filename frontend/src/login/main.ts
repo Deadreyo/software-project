@@ -4,4 +4,4 @@ import LoginPageController from "./LoginPageController";
 common();
 
 
-new LoginPageController();
+const loginPageController = new LoginPageController();
