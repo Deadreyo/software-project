@@ -162,7 +162,7 @@ body{
 }
 
 .main{
-    margin-top: 5vh;
+    /* margin-top: 1vh; */
     background-color: #f4f4f4;
     padding: 50px;
     display: flex;
@@ -223,8 +223,7 @@ body{
     /* transform: rotate(45deg); */
 }
 
-.add-expense{
-    
+.add-expense{ 
     background: linear-gradient(to top,#0ac30a,#1b7d1b);
     background: linear-gradient(to bottom right,#0ac30a,#245724);
     background: linear-gradient(to bottom right,#1D4ED8,#007bff);
@@ -358,7 +357,7 @@ body{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 20vh;
+    height: 25vh;
     gap: 15px;
 }
 
@@ -528,6 +527,7 @@ text-anchor: middle;
     background: transparent;
     color: #fff;
     border-radius: 10px;
+    padding: 10px;
     margin-bottom: 3px;
     width: 99%;
     cursor: pointer;
