@@ -174,13 +174,15 @@ export default class FormPageController implements PageController {
             const executionLimitInput = document.getElementById('executionLimit') as HTMLInputElement;
 
             transaction.startDate = startDateInput.valueAsNumber;
-            transaction.interval = parseInt(intervalInput.value);
+            const days = parseInt(intervalInput.value);
+            const millisecondsInDay = 24 * 60 * 60 * 1000;
+            transaction.interval = days * millisecondsInDay;
             transaction.executionLimit = parseInt(executionLimitInput.value);
         }
 
         let msg = this.validateTransaction(transaction, transactionPeriodSelect.value)
         if (msg !== null) {
-            warningMessage.textContent = msg;
+            warningMessage.textContent = "Incorrect: " +msg;
             warningMessage.style.visibility = 'visible';
             return;
         }
