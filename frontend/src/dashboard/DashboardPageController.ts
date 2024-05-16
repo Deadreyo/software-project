@@ -3,6 +3,8 @@ import Transaction from "../common/Classes/Transaction";
 import User from "../common/Classes/User";
 import PageController from "../common/Interfaces/PageController";
 import { TransactionType } from "../common/Classes/Transaction";
+import PeriodicTransaction from "../common/Classes/PeriodicTransaction";
+import { getDuration } from "../common/main";
 
 export default class DashboardPageController implements PageController {
   private incomeSpan: HTMLSpanElement;
@@ -156,10 +158,11 @@ export default class DashboardPageController implements PageController {
   }
 
   public fillTransactionTables(): void {
-    console.log(this.userTransactions)
     let totalIncome = 0;
     let totalExpense = 0;
-    this.userTransactions.forEach((transaction) => {
+    this.userTransactions.forEach((transaction, index) => {
+      transaction.updateTransaction()
+
       let row: HTMLTableRowElement
       if (transaction.getType() === "income") {
         row = this.incomeList.insertRow()
@@ -172,7 +175,7 @@ export default class DashboardPageController implements PageController {
       row.id = transaction.getId();
       row.insertCell().textContent = transaction.getName();
       row.insertCell().textContent = transaction.getAmount() + "";
-      row.insertCell().textContent = transaction.getType();
+      row.insertCell().textContent = transaction instanceof PeriodicTransaction ? "Periodic" : "One Time"
       row.insertCell().textContent = transaction
         .getCategory()
         .reduce((prev, current, index, array) => {
@@ -184,6 +187,25 @@ export default class DashboardPageController implements PageController {
 
       row.insertCell().innerHTML = `<i class="fas fa-edit"></i>
                                     <i class="fas fa-trash"></i>`;
+
+
+      if (transaction instanceof PeriodicTransaction) {
+        const nExecutions = transaction.getNumberOfExecutions()
+        const interval = getDuration(transaction.getInterval())
+
+        const hiddenCell = row.insertCell()
+        hiddenCell.classList.add("expanded-row-content")
+        hiddenCell.classList.add("hide-row")
+        
+        hiddenCell.innerHTML= `<h3>More Info</h3>
+                              <p>Executed ${nExecutions} times<br>
+                              Execution times left ${transaction.getExecutionLimit() - nExecutions}<br>
+                              Interval: ${interval.value} ${interval.unit}</p>`
+
+        row.addEventListener("click", () => {
+          hiddenCell.classList.toggle("hide-row")
+        })
+      }
     });
 
     this.updateIncomeAndExpense(totalIncome, totalExpense);

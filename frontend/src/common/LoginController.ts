@@ -45,7 +45,7 @@ export default class LoginController {
     }
 
     checkSavedUser() {
-        const savedUser = localStorage.getItem(this.savedUserKey)
+        const savedUser = localStorage.getItem(this.dbKey)
         if (!savedUser) {
             window.location.href = "./login.html"
             return
