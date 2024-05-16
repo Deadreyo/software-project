@@ -15,6 +15,7 @@ export default class PeriodicTransaction extends Transaction {
 
   public setStartDate(date: number) {
     this.startDate = date;
+    this.save();
   }
 
   public getInterval() {
