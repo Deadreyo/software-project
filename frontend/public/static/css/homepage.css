@@ -88,7 +88,7 @@ body{
     background: none;
     color: #fff;
     font-size: 3vh;
-    font-weight: bold;   
+    font-weight: bold;
     cursor: pointer;
     display: none;
 }
@@ -97,7 +97,7 @@ body{
     .logo{
         font-size: 3vh;
     }
-    
+
     .burger{
         display: flex;
         flex-direction: column;
@@ -106,7 +106,7 @@ body{
         margin-right: 10px;
         gap: 1vh;
     }
-    
+
     .burger div{
         background-color: #fff;
         border-radius: 4px;
@@ -224,7 +224,7 @@ body{
 }
 
 .add-expense{
-    
+
     background: linear-gradient(to top,#0ac30a,#1b7d1b);
     background: linear-gradient(to bottom right,#0ac30a,#245724);
     background: linear-gradient(to bottom right,#1D4ED8,#007bff);
