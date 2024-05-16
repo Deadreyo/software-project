@@ -13,9 +13,9 @@ app.use(cors());
 app.use(session({
     secret: 'dont-steal-plz',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        maxAge: 360000000,
+        maxAge: 3600000,
     },
 }));
 
