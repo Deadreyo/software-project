@@ -121,6 +121,7 @@ export default class DashboardPageController implements PageController {
   public handleSearch(): void {
     const searchBar = document.getElementById("search-bar") as HTMLInputElement;
     searchBar.addEventListener("keyup", (event) => {
+
       const rows = Array.from(
         this.incomeList.getElementsByTagName("tr")
       ).concat(
@@ -131,7 +132,7 @@ export default class DashboardPageController implements PageController {
       let totalIncome = 0;
       let totalExpense = 0;
 
-      for (let i = 1; i < rows.length; i++) {
+      for (let i = 0; i < rows.length; i++) {
         rows[i].style.display = "none";
         const cells = rows[i].getElementsByTagName("td");
         const nameCellValue = cells[0].textContent.toLowerCase();
@@ -154,6 +155,7 @@ export default class DashboardPageController implements PageController {
 
       this.updateIncomeAndExpense(totalIncome, totalExpense);
     });
+    document.getElementById("search-form").addEventListener("submit", (event) => event.preventDefault())
   }
 
   public handleAddPayment(): void {

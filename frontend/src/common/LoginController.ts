@@ -34,7 +34,7 @@ export default class LoginController {
     }
 
     logout() {
-        localStorage.removeItem(this.savedUserKey)
+        localStorage.removeItem(this.dbKey)
         window.location.href = "./login.html"
     }
 
