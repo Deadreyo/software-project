@@ -194,10 +194,6 @@ export default class FormPageController implements PageController {
 
         user.addTransaction(transactionObj);
 
-        // Reset form fields after submission (Uncomment later for ease of use)
-        // (document.getElementById('paymentForm') as HTMLFormElement).reset();
-        this.handleTransactionPeriodChange(); // To reset visibility of fields
-
         window.location.href = "./dashboard.html"
     }
 
