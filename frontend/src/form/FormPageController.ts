@@ -5,28 +5,102 @@ import PageController from "../common/Interfaces/PageController";
 import { PaymentMethod, TransactionType } from "../common/Classes/Transaction";
 
 export default class FormPageController implements PageController {
+    private value: string[] = [];
+    private user: User
+    private chipInput: HTMLInputElement;
+    private addChipBtn: HTMLButtonElement;
+    private chipsContainer: HTMLElement;
+    private logoutButton: HTMLElement;
 
+
+    constructor() {
+        this.chipInput = document.getElementById("chipInput") as HTMLInputElement;
+        this.addChipBtn = document.getElementById("addChipBtn") as HTMLButtonElement;
+        this.chipsContainer = document.getElementById("chipsContainer") as HTMLElement;
+        this.logoutButton = document.getElementById("logoutButton");
+    }
     public run(user: User): void {
-        const form = document.getElementById('paymentForm') as HTMLFormElement;
+
+        this.user = user
+        const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
 
         transactionPeriodSelect.value = 'once';
         typeSelect.value = 'expense';
 
-        this.handleTypeChange();
+        this.handleTypeChange(null);
         this.handleTransactionPeriodChange();
-
-        form.addEventListener('submit', (event) => this.handleSubmit(event, user));
+        this.addChipBtn.addEventListener("click", (event) => this.addChip(event));
+        submitButton.addEventListener('click', (event) => this.handleSubmit(event, this.user));
         transactionPeriodSelect.addEventListener('change', () => this.handleTransactionPeriodChange());
-        typeSelect.addEventListener('change', () => this.handleTypeChange());
+        typeSelect.addEventListener('change', (event) => this.handleTypeChange(event));
+    }
+    private addChip(event): void {
+        event.preventDefault();
+        const chipText = this.chipInput.value.trim();
+        if (chipText) {
+            this.value.push(chipText);
+            this.renderChips();
+            this.chipInput.value = "";
+        }
+    }
+
+    private removeChip(text: string): void {
+        const index = this.value.indexOf(text);
+        if (index !== -1) {
+            this.value.splice(index, 1);
+            this.renderChips();
+        }
+    }
+
+    private renderChips(): void {
+        this.chipsContainer.innerHTML = "";
+        this.value.forEach(text => {
+            this.addChipElement(text);
+        });
+    }
+
+    private addChipElement(text: string): void {
+        // Create chip container
+        const chip = document.createElement("div");
+        chip.classList.add("bg-gray-200", "rounded", "px-3", "py-1", "text-sm", "text-gray-700", "flex", "items-center", "mb-2", "mr-2","h-10");
+
+        // Create chip text
+        const chipText = document.createElement("span");
+        chipText.textContent = text;
+
+        //  close button
+        const chipCloseBtn = document.createElement("button");
+        chipCloseBtn.innerHTML = "&times;";
+        chipCloseBtn.classList.add("ml-2", "text-gray-500", "hover:text-gray-700", "focus:outline-none", "text-sm");
+
+        // Style
+        chipCloseBtn.addEventListener("mouseenter", () => {
+            chipCloseBtn.classList.replace("text-gray-500", "text-red-500");
+        });
+
+        chipCloseBtn.addEventListener("mouseleave", () => {
+            chipCloseBtn.classList.replace("text-red-500", "text-gray-500");
+        });
+
+        // Add click event to remove chip
+        chipCloseBtn.addEventListener("click", () => {
+            this.removeChip(text);
+        });
+
+        // Append chip text and close button to chip container
+        chip.appendChild(chipText);
+        chip.appendChild(chipCloseBtn);
+
+        // Append chip container to chips container
+        this.chipsContainer.appendChild(chip);
     }
 
     handleTransactionPeriodChange() {
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
         const dateFields = document.getElementById('dateFields') as HTMLElement;
         const periodicFields = document.getElementById('periodicFields') as HTMLElement;
-
         if (transactionPeriodSelect.value === 'once') {
             dateFields.style.display = 'block';
             periodicFields.style.display = 'none';
@@ -39,7 +113,7 @@ export default class FormPageController implements PageController {
         }
     }
 
-    handleTypeChange() {
+    handleTypeChange(event) {
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
         const sourceField = document.getElementById('sourceField') as HTMLElement;
         const destinationField = document.getElementById('destinationField') as HTMLElement;
@@ -68,12 +142,11 @@ export default class FormPageController implements PageController {
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
         const paymentSelect = document.getElementById('paymentMethod') as HTMLSelectElement;
         const amountInput = document.getElementById('amount') as HTMLInputElement;
-        const categoryInput = document.getElementById('category') as HTMLInputElement;
         const descriptionInput = document.getElementById('description') as HTMLInputElement;
         const sourceInput = document.getElementById('source') as HTMLInputElement;
         const destinationInput = document.getElementById('destination') as HTMLInputElement;
 
-        let categories = categoryInput.value.split(",").map((item: string) => item.trim());
+        let categories = this.value;
         let newCategories = categories.filter(category => !user.getCategories().includes(category))
         newCategories.forEach(category => user.addCategory(category));
 
@@ -99,13 +172,15 @@ export default class FormPageController implements PageController {
             const executionLimitInput = document.getElementById('executionLimit') as HTMLInputElement;
 
             transaction.startDate = startDateInput.valueAsNumber;
-            transaction.interval = parseInt(intervalInput.value);
+            const days = parseInt(intervalInput.value);
+            const millisecondsInDay = 24 * 60 * 60 * 1000;
+            transaction.interval = days * millisecondsInDay;
             transaction.executionLimit = parseInt(executionLimitInput.value);
         }
 
         let msg = this.validateTransaction(transaction, transactionPeriodSelect.value)
         if (msg !== null) {
-            warningMessage.textContent = msg;
+            warningMessage.textContent = "Incorrect: " +msg;
             warningMessage.style.visibility = 'visible';
             return;
         }
@@ -119,9 +194,7 @@ export default class FormPageController implements PageController {
 
         user.addTransaction(transactionObj);
 
-        // Reset form fields after submission (Uncomment later for ease of use)
-        // (document.getElementById('paymentForm') as HTMLFormElement).reset();
-        this.handleTransactionPeriodChange(); // To reset visibility of fields
+        window.location.href = "./dashboard.html"
     }
 
     validateTransaction(transaction: any, transactionPeriod: string): string | null {
@@ -149,4 +222,5 @@ export default class FormPageController implements PageController {
 
         return null;
     }
+
 }

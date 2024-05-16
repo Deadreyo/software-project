@@ -3,55 +3,68 @@ import PageController from "../common/Interfaces/PageController";
 import LoginController from "../common/LoginController";
 
 export default class LoginPageController {
-    loginController: LoginController;
+    private loginController: LoginController;
 
     constructor() {
         this.loginController = new LoginController();
-
-        const form = document.getElementById('paymentForm') as HTMLFormElement;
-
-        form.addEventListener('submit', (event) => this.handleSubmit(event));
+        this.logout();
+        this.setupLoginForm();
+        this.setupSignupForm();
     }
 
 
-    handleSubmit(event: Event) {
-        event.preventDefault();
-        console.log("Hello world")
-        
-        const emailInput = document.getElementById('email') as HTMLInputElement;
-        const passwordInput = document.getElementById('password') as HTMLInputElement;
-        const warningMessage = document.getElementById('warning') as HTMLParagraphElement;
-        
-        const new_user = {
-            name: emailInput.value,
-            password: passwordInput.value,
-        };
-
-        // Validate user data
-        if (!this.validateEmail(new_user.name)) {
-            warningMessage.textContent = 'Please enter a valid email address';
-            warningMessage.style.visibility = 'visible';
-            return;
-        }
-
-        if (!this.validatePassword(new_user.password)) {
-            warningMessage.textContent = 'Password must be at least 8 characters long';
-            warningMessage.style.visibility = 'visible';
-            return;
-        }
-
-        this.loginController.signUp(new_user.name, new_user.password);
-
-        console.log(new_user);
+    private setupLoginForm() {
+        const loginForm = document.getElementById("signinForm") as HTMLFormElement;
+        loginForm?.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const email = (document.getElementById("login-email") as HTMLInputElement).value;
+            const password = (document.getElementById("login-password") as HTMLInputElement).value;
+            this.login(email, password);
+        });
     }
 
-    validateEmail(email: string): boolean {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    private setupSignupForm() {
+        const passwordInput1 = document.getElementById("password1") as HTMLInputElement;
+        const passwordInput2 = document.getElementById("password2") as HTMLInputElement;
+        const signUpButton = document.getElementById("signup-button");
+
+        signUpButton?.addEventListener("click", (event) => {
+            event.preventDefault();
+            const username = (document.getElementById("signup-username") as HTMLInputElement).value;
+            const email = (document.getElementById("signup-email") as HTMLInputElement).value;
+            const password = passwordInput1.value;
+            const passwordConfirm = passwordInput2.value;
+
+            if (password !== passwordConfirm) {
+                alert("Passwords do not match");
+                return;
+            }
+            if (!this.validatepassword(password)){
+                alert("Password must contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long");
+                return;
+            }
+
+            this.signUp(username, email, password);
+        });
+    }
+    private login(email: string, password: string) {
+        this.loginController.login(email, password);
     }
 
-    validatePassword(password: string): boolean {
-        return password.length >= 8;
+    private signUp(username: string, email: string, password: string) {
+        this.loginController.signUp(email, password);
     }
-    
+
+    private logout() {
+        const logoutButton = document.getElementById("logoutButton");
+
+        logoutButton?.addEventListener("click", () => {
+            this.loginController.logout();
+
+        });
+    }
+    private validatepassword(password: string){
+        const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+        return passwordRegex.test(password);
+    }
 }
