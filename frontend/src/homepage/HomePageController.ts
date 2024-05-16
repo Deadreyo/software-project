@@ -3,8 +3,8 @@ import PageController from "../common/Interfaces/PageController";
 import Chart from 'chart.js/auto'
 
 export default class HomePageController implements PageController {
-
     public run(user: User): void {
+        console.log(user);
         const burger = document.getElementById('burger');
         const closeMenuBtn = document.getElementById("close");
         const menu = document.getElementById("menu");
@@ -90,7 +90,7 @@ export default class HomePageController implements PageController {
                 {
                     label: "Incomes",
                     borderColor: "#0ac30a",
-                    backgroundColor: "rgba(10, 195, 10,0.1)",
+                    backgroundColor: "rgba(10, 195, 10, 0.1)",
                     data: monthlyIncome,
                     // fill: true
                 },
@@ -121,6 +121,58 @@ export default class HomePageController implements PageController {
                         }
                     }
                 }
+              }
+        });
+
+        const pieChartRecords = new Chart("pie-chart-small",{
+            type:"pie",
+            data: {
+                labels: x,
+                datasets:[{
+                    backgroundColor: color,
+                    data: y,
+                }]
+            },
+        });
+        const barChartRecords = new Chart("bar-chart-small",{
+            type:"bar",
+            data: {
+                labels: x,
+                datasets:[{
+                    barThickness: 70,
+                    backgroundColor: "#007bff",
+                    data: y,
+                }]
+            },
+            options: {
+                plugins:{
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "Monthly Summary"
+                    },
+                },
+                scales: {
+                    x: {
+                      border: {
+                        display: true
+                      },
+                      grid: {
+                        display: false,
+                        drawOnChartArea: true,
+                        drawTicks: true,
+                      }
+                    },
+                    y: {
+                      border: {
+                        display: true
+                      },
+                      grid: {
+                        display: true,
+                        color: "#e3e3e3"
+                      },
+                    }
+                  }
               }
         });
         console.log(Chart)
