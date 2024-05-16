@@ -17,6 +17,8 @@ export default class DashboardPageController implements PageController {
   private expenseList: HTMLTableSectionElement;
   private expenseTable: HTMLTableElement;
 
+  private periodicInputs: HTMLCollectionOf<HTMLInputElement>
+
   private user: User;
   private userTransactions: Array<Transaction>;
   private closeBtn: HTMLButtonElement;
@@ -119,6 +121,7 @@ export default class DashboardPageController implements PageController {
   public handleSearch(): void {
     const searchBar = document.getElementById("search-bar") as HTMLInputElement;
     searchBar.addEventListener("keyup", (event) => {
+
       const rows = Array.from(
         this.incomeList.getElementsByTagName("tr")
       ).concat(
@@ -129,7 +132,7 @@ export default class DashboardPageController implements PageController {
       let totalIncome = 0;
       let totalExpense = 0;
 
-      for (let i = 1; i < rows.length; i++) {
+      for (let i = 0; i < rows.length; i++) {
         rows[i].style.display = "none";
         const cells = rows[i].getElementsByTagName("td");
         const nameCellValue = cells[0].textContent.toLowerCase();
@@ -152,6 +155,7 @@ export default class DashboardPageController implements PageController {
 
       this.updateIncomeAndExpense(totalIncome, totalExpense);
     });
+    document.getElementById("search-form").addEventListener("submit", (event) => event.preventDefault())
   }
 
   public handleAddPayment(): void {
@@ -182,9 +186,16 @@ export default class DashboardPageController implements PageController {
         .reduce((prev, current, index, array) => {
           return prev + current + (index < array.length - 1 ? "," : "");
         }, "");
-      row.insertCell().textContent = new Date(
-        transaction.getCreationDate()
-      ).toDateString();
+
+      if (transaction instanceof OneTimeTransaction)
+        row.insertCell().textContent = new Date(
+          transaction.getDate()
+        ).toDateString();
+      else if (transaction instanceof PeriodicTransaction)
+        row.insertCell().textContent = new Date(
+          transaction.getStartDate()
+        ).toDateString();
+      
 
       row.insertCell().innerHTML = `<i class="fas fa-edit"></i>
                                     <i class="fas fa-trash"></i>`;
@@ -220,12 +231,24 @@ export default class DashboardPageController implements PageController {
   public handleEdit(row: HTMLElement): void {
     this.editFromModal.style.display = "block";
 
+    const periodicFields = document.getElementById("periodic-fields");
+    this.periodicInputs = periodicFields.getElementsByTagName("input") as HTMLCollectionOf<HTMLInputElement>;  
+
     // select the transaction to edit
     const transactionId = row.id;
     const transaction = this.userTransactions.find(
       (transaction) => transaction.getId() === transactionId
     );
 
+    if (transaction instanceof OneTimeTransaction) {
+      periodicFields.style.display = "none";
+      document.getElementById("date-label").innerText = "Payment Date:"
+    } else {
+      document.getElementById("date-label").innerText = "Start Date:"
+      periodicFields.style.display = "block";
+      this.periodicInputs[0].valueAsNumber = getDuration((transaction as PeriodicTransaction).getInterval()).value
+      this.periodicInputs[1].valueAsNumber = (transaction as PeriodicTransaction).getExecutionLimit()
+    }
     // populate the form with the transaction data
     this.selectedTransactionId = transactionId;
     this.nameInput.value = transaction.getName();
@@ -257,9 +280,11 @@ export default class DashboardPageController implements PageController {
 
       if (transaction instanceof OneTimeTransaction)
         transaction.setDate(new Date(this.dateInput.value).getTime())
-      else if (transaction instanceof PeriodicTransaction)
+      else if (transaction instanceof PeriodicTransaction) {
         transaction.setStartDate(new Date(this.dateInput.value).getTime())
-      
+        transaction.setInterval(this.periodicInputs[0].valueAsNumber * 24 * 60 * 60 * 1000)
+        transaction.setExecutionLimit(this.periodicInputs[1].valueAsNumber)
+      }
       // update the total income and expense if the amount has changed or the type has changed or both
       if (oldType == transaction.getType()) {
         if (transaction.getType() === "income") {
@@ -320,8 +345,22 @@ export default class DashboardPageController implements PageController {
       .reduce((prev, current, index, array) => {
         return prev + current + (index < array.length - 1 ? "," : "");
       }, "");
-    cells[4].textContent = new Date(
-      transaction.getCreationDate()
-    ).toDateString();
+
+    if (transaction instanceof OneTimeTransaction) {
+      cells[4].textContent = new Date(transaction.getDate()).toDateString()
+      console.log(cells[4].textContent)
+    }
+    else if (transaction instanceof PeriodicTransaction)
+      cells[4].textContent = new Date(transaction.getStartDate()).toDateString()
+
+    if (transaction instanceof PeriodicTransaction) {
+      const nExecutions = transaction.getNumberOfExecutions()
+      const interval = getDuration(transaction.getInterval())
+
+      cells[6].innerHTML = `<h2>More Info</h2>
+                            <p>Executed ${nExecutions} times<br>
+                            Execution times left ${transaction.getExecutionLimit() - nExecutions}<br>
+                            Interval: ${interval.value} ${interval.unit}</p>`
+    }
   }
 }

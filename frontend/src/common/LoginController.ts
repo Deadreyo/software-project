@@ -16,12 +16,6 @@ export default class LoginController {
         localStorage.setItem(this.savedUserKey, JSON.stringify(this.user.toJSON()))
         window.location.href = "./homepage.html"
     }
-
-    createGuestUser() {
-        const exampleMail = "mail@example.com"
-        const dummyPassword = "password123"
-        this.signUp(exampleMail, dummyPassword)
-    }
     
     login(email: string, password: string) {
         const savedUser = localStorage.getItem(this.dbKey)
@@ -40,7 +34,7 @@ export default class LoginController {
     }
 
     logout() {
-        localStorage.removeItem(this.savedUserKey)
+        localStorage.removeItem(this.dbKey)
         window.location.href = "./login.html"
     }
 
