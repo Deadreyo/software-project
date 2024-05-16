@@ -7,8 +7,13 @@ import { TransactionType } from "../common/Classes/Transaction";
 export default class DashboardPageController implements PageController {
   private incomeSpan: HTMLSpanElement;
   private expenseSpan: HTMLSpanElement;
-  private transactionList: HTMLTableSectionElement;
-  private transactionsTable: HTMLTableElement;
+
+  private incomeList: HTMLTableSectionElement;
+  private incomeTable: HTMLTableElement;
+
+  private expenseList: HTMLTableSectionElement;
+  private expenseTable: HTMLTableElement;
+
   private user: User;
   private userTransactions: Array<Transaction>;
   private closeBtn: HTMLButtonElement;
@@ -23,7 +28,7 @@ export default class DashboardPageController implements PageController {
 
   public run(user: User): void {
     this.init(user);
-    this.fillTransactionTable();
+    this.fillTransactionTables();
     this.handleSearch();
     this.handleTableClick();
     this.handleClose();
@@ -33,35 +38,37 @@ export default class DashboardPageController implements PageController {
   private init(user: User): void {
     this.user = user;
 
-    this.transactionsTable = document.getElementById(
-      "trans-table"
+    this.incomeTable = document.getElementById(
+      "income-table"
     ) as HTMLTableElement;
-
-    this.transactionList = document.getElementById(
-      "transaction-list"
+    this.incomeList = document.getElementById(
+      "income-list"
     ) as HTMLTableSectionElement;
+    this.expenseTable = document.getElementById(
+      "expense-list"
+    ) as HTMLTableElement
+    this.expenseList = document.getElementById(
+      "expense-list"
+    ) as HTMLTableSectionElement
+
 
     this.incomeSpan = document.getElementById("income-amount");
-
     this.expenseSpan = document.getElementById("expense-amount");
 
     this.userTransactions = this.user.getAllTransactions();
 
     this.closeBtn = document.getElementById("close-btn") as HTMLButtonElement;
-
     this.saveBtn = document.getElementById("save-btn") as HTMLButtonElement;
 
     this.editFromModal = document.getElementById(
       "editFormModal"
     ) as HTMLDivElement;
     this.nameInput = document.getElementById("editName") as HTMLInputElement;
-
     this.amountInput = document.getElementById(
       "editAmount"
     ) as HTMLInputElement;
 
     this.typeSelect = document.getElementById("editType") as HTMLSelectElement;
-
     this.categoryInput = document.getElementById(
       "editCategory"
     ) as HTMLInputElement;
@@ -70,14 +77,17 @@ export default class DashboardPageController implements PageController {
   }
 
   public handleTableClick(): void {
-    this.transactionList.addEventListener("click", (event) => {
+    function clickHandler(event): void {
       const target = event.target as HTMLElement;
       if (target.classList.contains("fa-trash")) {
         this.handleDelete(target.parentElement.parentElement);
       } else if (target.classList.contains("fa-edit")) {
         this.handleEdit(target.parentElement.parentElement);
       }
-    });
+    }
+
+    this.incomeList.addEventListener("click", clickHandler.bind(this));
+    this.expenseList.addEventListener("click", clickHandler.bind(this));
   }
 
   public handleDelete(row: HTMLElement): void {
@@ -106,7 +116,12 @@ export default class DashboardPageController implements PageController {
   public handleSearch(): void {
     const searchBar = document.getElementById("search-bar") as HTMLInputElement;
     searchBar.addEventListener("keyup", (event) => {
-      const rows = this.transactionsTable.getElementsByTagName("tr");
+      const rows = Array.from(
+        this.incomeList.getElementsByTagName("tr")
+      ).concat(
+        Array.from(this.expenseList.getElementsByTagName("tr"))
+      );
+
       const searchValue = searchBar.value.trim().toLowerCase();
       let totalIncome = 0;
       let totalExpense = 0;
@@ -140,11 +155,20 @@ export default class DashboardPageController implements PageController {
     window.location.href = "./form.html";
   }
 
-  public fillTransactionTable(): void {
+  public fillTransactionTables(): void {
+    console.log(this.userTransactions)
     let totalIncome = 0;
     let totalExpense = 0;
     this.userTransactions.forEach((transaction) => {
-      const row = this.transactionList.insertRow();
+      let row: HTMLTableRowElement
+      if (transaction.getType() === "income") {
+        row = this.incomeList.insertRow()
+        totalIncome += transaction.getAmount();
+      } else {
+        row = this.expenseList.insertRow()
+        totalExpense += transaction.getAmount();
+      }
+
       row.id = transaction.getId();
       row.insertCell().textContent = transaction.getName();
       row.insertCell().textContent = transaction.getAmount() + "";
@@ -160,12 +184,6 @@ export default class DashboardPageController implements PageController {
 
       row.insertCell().innerHTML = `<i class="fas fa-edit"></i>
                                     <i class="fas fa-trash"></i>`;
-
-      if (transaction.getType() === "income") {
-        totalIncome += transaction.getAmount();
-      } else {
-        totalExpense += transaction.getAmount();
-      }
     });
 
     this.updateIncomeAndExpense(totalIncome, totalExpense);

@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   background-color: #f9f9f9;
   padding: 20px;
@@ -39,19 +39,22 @@ h1 {
 }
 
 .transaction-table {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
 }
 
 table {
-  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width:auto;
   border-collapse: collapse;
 }
 
-thead th {
+th {
   background-color: #f2f2f2;
   padding: 10px;
   text-align: center;
