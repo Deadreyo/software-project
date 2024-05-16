@@ -98,7 +98,6 @@ export default class FormPageController implements PageController {
     }
 
     handleTransactionPeriodChange() {
-        console.log("Transaction")
         const transactionPeriodSelect = document.getElementById('transactionPeriod') as HTMLSelectElement;
         const dateFields = document.getElementById('dateFields') as HTMLElement;
         const periodicFields = document.getElementById('periodicFields') as HTMLElement;
@@ -115,7 +114,6 @@ export default class FormPageController implements PageController {
     }
 
     handleTypeChange(event) {
-        console.log("Select")
         const typeSelect = document.getElementById('type') as HTMLSelectElement;
         const sourceField = document.getElementById('sourceField') as HTMLElement;
         const destinationField = document.getElementById('destinationField') as HTMLElement;
