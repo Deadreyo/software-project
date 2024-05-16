@@ -184,9 +184,16 @@ export default class DashboardPageController implements PageController {
         .reduce((prev, current, index, array) => {
           return prev + current + (index < array.length - 1 ? "," : "");
         }, "");
-      row.insertCell().textContent = new Date(
-        transaction.getCreationDate()
-      ).toDateString();
+
+      if (transaction instanceof OneTimeTransaction)
+        row.insertCell().textContent = new Date(
+          transaction.getDate()
+        ).toDateString();
+      else if (transaction instanceof PeriodicTransaction)
+        row.insertCell().textContent = new Date(
+          transaction.getStartDate()
+        ).toDateString();
+      
 
       row.insertCell().innerHTML = `<i class="fas fa-edit"></i>
                                     <i class="fas fa-trash"></i>`;
@@ -337,8 +344,10 @@ export default class DashboardPageController implements PageController {
         return prev + current + (index < array.length - 1 ? "," : "");
       }, "");
 
-    if (transaction instanceof OneTimeTransaction)
+    if (transaction instanceof OneTimeTransaction) {
       cells[4].textContent = new Date(transaction.getDate()).toDateString()
+      console.log(cells[4].textContent)
+    }
     else if (transaction instanceof PeriodicTransaction)
       cells[4].textContent = new Date(transaction.getStartDate()).toDateString()
 
