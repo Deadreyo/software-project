@@ -39,11 +39,6 @@ export default abstract class Transaction {
     return this.creationDate;
   }
 
-  public setCreationDate(date: number) {
-    this.creationDate = date;
-    this.save();
-  }
-
   public isEnded() {
     return this.ended;
   }

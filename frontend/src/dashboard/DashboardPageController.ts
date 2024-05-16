@@ -5,6 +5,7 @@ import PageController from "../common/Interfaces/PageController";
 import { TransactionType } from "../common/Classes/Transaction";
 import PeriodicTransaction from "../common/Classes/PeriodicTransaction";
 import { getDuration } from "../common/main";
+import OneTimeTransaction from "../common/Classes/OneTimeTransaction";
 
 export default class DashboardPageController implements PageController {
   private incomeSpan: HTMLSpanElement;
@@ -197,7 +198,7 @@ export default class DashboardPageController implements PageController {
         hiddenCell.classList.add("expanded-row-content")
         hiddenCell.classList.add("hide-row")
         
-        hiddenCell.innerHTML= `<h3>More Info</h3>
+        hiddenCell.innerHTML= `<h2>More Info</h2>
                               <p>Executed ${nExecutions} times<br>
                               Execution times left ${transaction.getExecutionLimit() - nExecutions}<br>
                               Interval: ${interval.value} ${interval.unit}</p>`
@@ -253,8 +254,12 @@ export default class DashboardPageController implements PageController {
       transaction.setAmount(parseFloat(this.amountInput.value));
       transaction.setCategory(this.categoryInput.value.split(","));
       transaction.setType(this.typeSelect.value as TransactionType);
-      transaction.setCreationDate(new Date(this.dateInput.value).getTime());
 
+      if (transaction instanceof OneTimeTransaction)
+        transaction.setDate(new Date(this.dateInput.value).getTime())
+      else if (transaction instanceof PeriodicTransaction)
+        transaction.setStartDate(new Date(this.dateInput.value).getTime())
+      
       // update the total income and expense if the amount has changed or the type has changed or both
       if (oldType == transaction.getType()) {
         if (transaction.getType() === "income") {
@@ -275,7 +280,7 @@ export default class DashboardPageController implements PageController {
       }
 
       this.updateIncomeAndExpense(totalIncome, totalExpense);
-      this.updateTransactionRow(transaction);
+      this.updateTransactionRow(oldType, transaction);
       this.editFromModal.style.display = "none";
     });
   }
@@ -291,12 +296,25 @@ export default class DashboardPageController implements PageController {
     return date.toISOString().split("T")[0];
   }
 
-  public updateTransactionRow(transaction: Transaction): void {
+  public updateTransactionRow(oldType: TransactionType, transaction: Transaction): void {
     const row = document.getElementById(transaction.getId());
+    const newType = transaction.getType()
+
+    if (oldType != newType) {
+      switch (newType) {
+        case "income":
+          this.incomeList.appendChild(row)
+          break;
+        case "expense":
+          this.expenseList.appendChild(row)
+          break;
+      }
+    }
+
     const cells = row.getElementsByTagName("td");
     cells[0].textContent = transaction.getName();
     cells[1].textContent = transaction.getAmount().toString();
-    cells[2].textContent = transaction.getType();
+    cells[2].textContent = transaction instanceof PeriodicTransaction ? "Periodic" : "One Time"
     cells[3].textContent = transaction
       .getCategory()
       .reduce((prev, current, index, array) => {
