@@ -4,53 +4,98 @@ import PageController from "./Interfaces/PageController";
 export default class LoginController {
 
     private user: User;
-    private dbKey: string = "userDatabase"
-    private savedUserKey: string = "savedUser"
     
-    signUp(email: string, password: string) {
+    async signUp(email: string, password: string) {
         this.user = User.create(this, email)
-        localStorage.setItem(this.dbKey, JSON.stringify({
-            ...this.user.toJSON(),
-            password
-        }))
-        localStorage.setItem(this.savedUserKey, JSON.stringify(this.user.toJSON()))
+        const req = await fetch("http://localhost:3000/users/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+            credentials: "include",
+        });
+
+        const res = await req.json();
+        if (res.error) {
+            alert(res.error)
+            return
+        }
         window.location.href = "./homepage.html"
     }
     
-    login(email: string, password: string) {
-        const savedUser = localStorage.getItem(this.dbKey)
-        if (!savedUser) {
+    async login(email: string, password: string) {
+        const req = await fetch("http://localhost:3000/users/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+        const res = await req.json();
+        if (res.error) {
+            alert(res.error)
             return
         }
 
-        const user = JSON.parse(savedUser)
-        if (user.email === email && user.password === password) {
-            delete user.password;
-            localStorage.setItem(this.savedUserKey, JSON.stringify(user))
-            window.location.href = "./homepage.html"
-        } else {
-            alert("Invalid email or password")
-        }
+        window.location.href = "./homepage.html"
     }
 
-    logout() {
-        localStorage.removeItem(this.dbKey)
+    async logout() {
+        await fetch("http://localhost:3000/users/logout")        
         window.location.href = "./login.html"
     }
 
-    checkSavedUser() {
-        const savedUser = localStorage.getItem(this.dbKey)
-        if (!savedUser) {
+    async checkSavedUser() {
+
+        try {
+            const req = await fetch("http://localhost:3000/users/", {
+                method: 'GET',
+                headers: {
+                  'Accept': 'application/json'
+                },
+                credentials: 'include',
+            })
+
+            if (req.status === 401) {
+                window.location.href = "./login.html"
+                return
+            }
+            
+            const user = await req.json()
+            this.user = User.load(this, user)
+        } catch (e) {
+            window.location.href = "./login.html"
+        }
+    }
+
+    async saveUser() {
+        const req = await fetch("http://localhost:3000/users/update", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.user.toJSON()),
+            credentials: "include",
+        });
+
+        if(req.status === 401) {
             window.location.href = "./login.html"
             return
         }
 
-        const savedUserObj = JSON.parse(savedUser)
-        this.user = User.load(this, savedUserObj)
-    }
-
-    async saveUser() {
-        localStorage.setItem(this.dbKey, JSON.stringify(this.user.toJSON()))
+        const res = await req.json();
+        if (res.error) {
+            alert(res.error)
+            return
+        }
     }
 
     static activatePage(pageController: PageController) {
