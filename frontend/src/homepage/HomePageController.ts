@@ -72,7 +72,7 @@ export default class HomePageController implements PageController {
             
             let recent = [];
             if(transactions.length > 10)
-                recent = transactions.splice(transactions.length-10);
+                recent = transactions.slice(transactions.length-10);
             else recent = [...transactions];
             const recentContainer = document.getElementById("my-transactions");
             console.log(recent)
@@ -100,7 +100,7 @@ export default class HomePageController implements PageController {
             let expenses = [];
             let Expenses = 0
             let incomes = 0
-            const past30Transactions = transactions.filter(transaction=>Date.now() - transaction.date <= 30*24*60*60*1000);
+            const past30Transactions = transactions.filter(transaction=>(Date.now() - transaction.date) <= 30*24*60*60*1000);
             past30Transactions.forEach(transaction=>{
                 if(transaction.getType() === "expense"){
                     expenses.push(+transaction.getAmount())
