@@ -117,15 +117,179 @@
             <div class="second-section">
                 <div class="monthly-statistics">
                     <div class="daily-stats-head">
-                        <h3>Monthly Rate</h3>
+                        <h5>Monthly Rate</h5>
                         <input type="date" class="date">
                     </div>
-                    <div class="line-chart">
-                        <canvas id="line-chart"></canvas>
+                    <div class="yearly-stats">
+                        <div class="line-chart">
+                            <canvas id="line-chart"></canvas>
+                        </div>
+                        <div class="year-statistics">
+                            <!-- <h5> This Year Statistics </h5> -->
+                            <!-- <h5 style="transform:rotate(-90deg);">Year 2023</h5> -->
+                            <h5 style="flex: 1;">Year 2023</h5>
+                                <!-- <div class="outer-div"> -->
+                                    <div class="month-div">
+                                        <span>Largest Expense:</span>
+                                        <span class="month">Bought a new car</span>
+                                        <span class="amount"><span>30000</span> EGP</span> 
+                                    </div>
+                                    <div class="month-div">
+                                        <span>Largest Expenses in:</span>
+                                        <span class="month">June</span>
+                                        <span class="amount"><span>37000</span> EGP</span>
+                                    </div>
+                                    <div class="month-div">
+                                        <span>Lowest Expenses in:</span>
+                                        <span class="month">May</span>
+                                        <span class="amount"><span>30000</span> EGP</span>
+                                    </div>
+                                <!-- </div> -->
+                                <div class="outer-div">
+                                    <div>
+                                        <span style="font-size: 20px;">Total Income</span>
+                                        <span style="font-weight: 600; color: green;">40000</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 20px;">Total Expenses</span>
+                                        <span style="font-weight: 600; color: red;">30000</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 20px;">Balance</span>
+                                        <span style="font-weight: 600;">10000</span>
+                                    </div>
+                                </div>
+                                <div class="percentage-container outer-div">
+                                    <span>Used Income</span>
+                                    <svg viewBox="0 0 36 36" class="circular-chart orange">
+                                        <path class="circle-bg"
+                                          d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        />
+                                        <path class="circle"
+                                          stroke-dasharray="30, 100"
+                                          d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        />
+                                        <text x="18" y="20.35" class="percentage">30%</text>
+                                      </svg>
+                                    <!-- <div class="percentage">
+                                        50%
+                                    </div> -->
+                                </div>
+                            <!-- </div> -->
+                        </div>
                     </div>
                 </div>
+                <div class="transactions">
+                    <p style="font-size: 20px; font-weight: 600; text-align: left; color: #fff;">Recent Transactions</p>
+                    <div class="transactions-table" style="margin-top: 10px;">
+                        <!-- <div class="transactions-header">
+                            <div>Name</div>
+                            <div>Type</div>
+                            <div>Category</div>
+                            <div>Amount</div>
+                        </div> -->
+                        <div class="my-transactions">
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: rgb(20, 232, 20);">+500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: rgb(20, 232, 20);">+500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: rgb(20, 232, 20);">+500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: rgb(20, 232, 20);">+500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: red;">-500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: rgb(20, 232, 20);">+500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: rgb(20, 232, 20);">+500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy New Phone</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color:red">-500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Buy ps4</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: red;">-500</div>
+                            </div>
+                            <div class="transaction">
+                                <div>Freelance</div>
+                                <!-- <div style="">Expense</div> -->
+                                <!-- <div>Shopping</div> -->
+                                <div style="color: rgb(20, 232, 20);">+500</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 style="font-size: 20h5px; font-weight: 600; text-align: left; color: #fff; margin-bottom:15px;">Past 30 days records:</h5>
+                    <div class="records">
+                        <div class="records-inner records-chart" style="">
+                            <canvas id="pie-chart-small"></canvas>
+                        </div>
+                        <div class="second-div">
+                            <div class="records-inner highest-record" style="">
+                                <span>Largest Expense</span>
+                                <span style="font-weight: 600;">Buy ps4</span>
+                                <span style="font-weight: 600;">300</span>
+                            </div>
+                            <div class="records-amounts">
+                                <div>
+                                    <span style="color: rgb(35, 205, 35); color: green;">
+                                        <span>+500</span>   
+                                        <span class="material-symbols-outlined">
+                                            arrow_warm_up
+                                        </span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span style="color: red;">
+                                        <span>-200</span>   
+                                        <span class="material-symbols-outlined">
+                                            arrow_cool_down
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
             </div>
         </div>
+        
     </div>
 
 </body>
