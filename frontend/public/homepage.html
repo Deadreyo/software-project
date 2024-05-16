@@ -105,7 +105,7 @@
                 <span class="material-symbols-outlined" style="color: #007bff;">
                     receipt
                 </span>
-                <span>10</span>
+                <span id="noexpenses"></span>
                 <span>Number Of Expenses</span>
             </div>
             <div class="general-info-box">
@@ -116,7 +116,7 @@
                     <!-- <div style="border-right: 2px solid #000; padding-right: 15px;"> -->
                     <div>
                         <span style="color: rgb(35, 205, 35); color: green;">
-                            <span>+500</span>   
+                            <span id="income"></span>   
                             <span class="material-symbols-outlined trending-arrow">
                                 trending_up
                             </span>
@@ -126,21 +126,21 @@
                     <!-- <div style="border-left: 0px solid #000; padding-left: 15px;"> -->
                     <div>
                         <span style="color: red;">
-                            <Span>-100</Span>
+                            <Span id="expenses"></Span>
                             <span class="material-symbols-outlined trending-arrow">
                                 trending_down
                             </span>
                         </span>
                     </div>
                 </div>
-                <span>Last Month</span>
+                <span>Income/Expenses</span>
             </div>
             <div class="general-info-box">
                 <span class="material-symbols-outlined" style="color: rgb(35, 205, 35); color: #007bff;">
                     monetization_on
                 </span>
                 <span>
-                    <span style="font-size: 2rem;">400</span> EGP
+                    <span style="font-size: 2rem;" id="total"></span> EGP
                 </span>
                 <span>Total Amount</span>
             </div>
@@ -164,7 +164,7 @@
                 <div class="category-summary monthly-summary">
                     <div class="chart-head">
                         <h5>Monthly Summary</h5>
-                        <input type="date" class="date">
+                        <input type="date" class="date" id="monthly-summary-date" value="2012-3-23">
                     </div>
                     <div class="bar-chart">
                         <canvas id="bar-chart"></canvas>
@@ -178,7 +178,7 @@
                         <!-- <input type="date" class="date"> -->
                         <select name="year" id="year">
                             <option value="2023">2023</option>
-                            <option value="2024">2024</option>
+                            <option selected value="2024">2024</option>
                         </select>
                     </div>
                     <div class="yearly-stats">
@@ -188,36 +188,36 @@
                         <div class="year-statistics">
                             <!-- <h5> This Year Statistics </h5> -->
                             <!-- <h5 style="transform:rotate(-90deg);">Year 2023</h5> -->
-                            <h5 style="flex: 1;">Year 2023</h5>
+                            <h5 style="flex: 1;" id="current-year"></h5>
                                 <!-- <div class="outer-div"> -->
                                     <div class="month-div">
                                         <span>Largest Expense:</span>
-                                        <span class="month">Bought a new car</span>
-                                        <span class="amount"><span>30000</span> EGP</span> 
+                                        <span class="month" id="lg-exp">Bought a new car</span>
+                                        <span class="amount"><span id="lg-exp-am"></span> EGP</span> 
                                     </div>
                                     <div class="month-div">
                                         <span>Largest Expenses in:</span>
-                                        <span class="month">June</span>
-                                        <span class="amount"><span>37000</span> EGP</span>
+                                        <span class="month" id="lg-ex-m">May</span>
+                                        <span class="amount" id="lg-ex-am"><span>37000</span> EGP</span>
                                     </div>
                                     <div class="month-div">
                                         <span>Lowest Expenses in:</span>
-                                        <span class="month">May</span>
-                                        <span class="amount"><span>30000</span> EGP</span>
+                                        <span class="month" id="lst-ex-m">May</span>
+                                        <span class="amount" id="lst-ex-am"><span>30000</span> EGP</span>
                                     </div>
                                 <!-- </div> -->
                                 <div class="outer-div">
                                     <div>
                                         <span style="font-size: 20px;">Total Income</span>
-                                        <span style="font-weight: 600; color: green;">40000</span>
+                                        <span style="font-weight: 600; color: green;" id="total-inc"></span>
                                     </div>
                                     <div>
                                         <span style="font-size: 20px;">Total Expenses</span>
-                                        <span style="font-weight: 600; color: red;">30000</span>
+                                        <span style="font-weight: 600; color: red;" id="total-exp"></span>
                                     </div>
                                     <div>
                                         <span style="font-size: 20px;">Balance</span>
-                                        <span style="font-weight: 600;">10000</span>
+                                        <span style="font-weight: 600;" id="total-balance">10000</span>
                                     </div>
                                 </div>
                                 <div class="percentage-container outer-div">
@@ -254,66 +254,46 @@
                             <div>Amount</div>
                         </div> -->
                         <div class="my-transactions" id="my-transactions">
-                            <div class="transaction">
+                            <!-- <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: rgb(20, 232, 20);">+500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: rgb(20, 232, 20);">+500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: rgb(20, 232, 20);">+500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: rgb(20, 232, 20);">+500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: red;">-500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: rgb(20, 232, 20);">+500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: rgb(20, 232, 20);">+500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy New Phone</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color:red">-500</div>
                             </div>
                             <div class="transaction">
                                 <div>Buy ps4</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: red;">-500</div>
                             </div>
                             <div class="transaction">
                                 <div>Freelance</div>
-                                <!-- <div style="">Expense</div> -->
-                                <!-- <div>Shopping</div> -->
                                 <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <h5 style="font-size: 20h5px; font-weight: 600; text-align: left; color: #fff; margin-bottom:15px;">Past 30 days records:</h5>

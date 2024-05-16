@@ -13,6 +13,10 @@ export default class PeriodicTransaction extends Transaction {
     return this.startDate;
   }
 
+  public setStartDate(date: number) {
+    this.startDate = date;
+  }
+
   public getInterval() {
     return this.interval;
   }
