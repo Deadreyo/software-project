@@ -92,21 +92,17 @@
 
     <div class="main">
         <div class="general-info">
-            <div class="general-info-box">
-                <!-- <span class="material-symbols-outlined">
-                    calendar_month
-                </span> -->
+            <!-- <div class="general-info-box">
                 <span class="" style="font-size: 1.1rem;">Next Payment in:</span>
                 <span style="color:green;">10:23:59:20</span>
                 <span class="" style="">Jun 05 2024</span>
-                <!-- <span>Nearest to Pay</span> -->
-            </div>
+            </div> -->
             <div class="general-info-box">
                 <span class="material-symbols-outlined" style="color: #007bff;">
                     receipt
                 </span>
                 <span id="noexpenses"></span>
-                <span>Number Of Expenses</span>
+                <span>Number Of Transactions</span>
             </div>
             <div class="general-info-box">
                 <span class="material-symbols-outlined" style="color: #007bff;">
@@ -197,8 +193,8 @@
                                     </div>
                                     <div class="month-div">
                                         <span>Largest Expenses in:</span>
-                                        <span class="month" id="lg-ex-m">May</span>
-                                        <span class="amount" id="lg-ex-am"><span>37000</span> EGP</span>
+                                        <span class="month" id="lg-ex-m"></span>
+                                        <span class="amount"><span id="lg-ex-am"></span> EGP</span>
                                     </div>
                                     <div class="month-div">
                                         <span>Lowest Expenses in:</span>
@@ -228,13 +224,13 @@
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"
                                         />
-                                        <path class="circle"
-                                          stroke-dasharray="30, 100"
+                                        <path id="perc-circle" class="circle"
+                                          stroke-dasharray="80, 100"
                                           d="M18 2.0845
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"
                                         />
-                                        <text x="18" y="20.35" class="percentage">30%</text>
+                                        <text x="18" y="20.35" class="percentage" id="percentage"></text>
                                       </svg>
                                     <!-- <div class="percentage">
                                         50%
@@ -254,46 +250,6 @@
                             <div>Amount</div>
                         </div> -->
                         <div class="my-transactions" id="my-transactions">
-                            <!-- <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: red;">-500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy New Phone</div>
-                                <div style="color:red">-500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Buy ps4</div>
-                                <div style="color: red;">-500</div>
-                            </div>
-                            <div class="transaction">
-                                <div>Freelance</div>
-                                <div style="color: rgb(20, 232, 20);">+500</div>
-                            </div> -->
                         </div>
                     </div>
                     <h5 style="font-size: 20h5px; font-weight: 600; text-align: left; color: #fff; margin-bottom:15px;">Past 30 days records:</h5>
@@ -304,13 +260,13 @@
                         <div class="second-div">
                             <div class="records-inner highest-record" style="">
                                 <span>Largest Expense</span>
-                                <span style="font-weight: 600;">Buy ps4</span>
-                                <span style="font-weight: 600;">300</span>
+                                <span style="font-weight: 600;" id="past30name"></span>
+                                <span style="font-weight: 600;" id="past30value"></span>
                             </div>
                             <div class="records-amounts">
                                 <div>
                                     <span style="color: rgb(35, 205, 35); color: green;">
-                                        <span>+500</span>   
+                                        <span id="past30income"></span>   
                                         <span class="material-symbols-outlined">
                                             arrow_warm_up
                                         </span>
@@ -318,7 +274,7 @@
                                 </div>
                                 <div>
                                     <span style="color: red;">
-                                        <span>-200</span>   
+                                        <span id="past30expenses"></span>   
                                         <span class="material-symbols-outlined">
                                             arrow_cool_down
                                         </span>

@@ -17,8 +17,8 @@ export default class HomePageController implements PageController {
             categoryData[`${categories[i]}`] = (transactions.map(transaction=>{
                 if(transaction.getCategory().toString() === categories[i]){
                     // console.log(transaction)
-                    console.log(new Date(transaction.getCreationDate()).getFullYear())
-                    return +transaction.amount;
+                    console.log(new Date(transaction.date).getFullYear())
+                    return +transaction.getAmount();
                 }
                 return 0;
             })).reduce((sum,a)=>sum+a,0);
@@ -28,22 +28,23 @@ export default class HomePageController implements PageController {
         const y = Object.values(categoryData); 
         // Add recent transactions
         window.onload = ()=>{
+            setMonthlySummary(new Date());
             const month = document.getElementById("monthly-summary-date");
-            const year = document.getElementById("year").value;
+            // const year = document.getElementById("year").value;
             const total = document.getElementById("total");
             const expensesNumber = document.getElementById("noexpenses")
             const incomeSpan = document.getElementById("income")
             const expensesSpan = document.getElementById("expenses")
             const expensesNumberValue = (transactions.map(transaction=>{
-                if(transaction.getType() === "income") return +transaction.amount
-                else return -1 * +transaction.amount;
+                if(transaction.getType() === "income") return +transaction.getAmount()
+                else return -1 * +transaction.getAmount();
             })).reduce((sum,a)=>sum+a,0);
             const totalIncome = (transactions.map(transaction=>{
-                if(transaction.getType() === "income") return +transaction.amount
+                if(transaction.getType() === "income") return +transaction.getAmount()
                 return 0;
             })).reduce((sum,a)=>sum+a,0);
             const totalExpenses = (transactions.map(transaction=>{
-                if(transaction.getType() === "expense") return +transaction.amount * -1
+                if(transaction.getType() === "expense") return +transaction.getAmount() * -1
                 return 0;
             })).reduce((sum,a)=>sum+a,0);
             console.log(totalIncome)
@@ -53,7 +54,7 @@ export default class HomePageController implements PageController {
             total.innerHTML = `${expensesNumberValue}`;
             expensesNumber.innerHTML = `${transactions.length}`;
             console.log(expensesNumberValue)
-            setAnnualSummary(year);
+            setAnnualSummary("2024");
             let m = ""
             let d = ""
             let y = new Date().getFullYear().toString();
@@ -68,7 +69,7 @@ export default class HomePageController implements PageController {
             month.value = y + "-" + m + "-" + d;
 
             console.log("month",month)
-            setMonthlySummary(new Date());
+            
             let recent = [];
             if(transactions.length > 10)
                 recent = transactions.splice(transactions.length-10);
@@ -92,18 +93,57 @@ export default class HomePageController implements PageController {
                 transaction.classList.add("transaction");
                 recentContainer.appendChild(transaction)
             }
+
+            // past 30 days records
+            let maxValue = 0
+            let maxValueName = ""
+            let expenses = [];
+            let Expenses = 0
+            let incomes = 0
+            const past30Transactions = transactions.filter(transaction=>Date.now() - transaction.date <= 30*24*60*60*1000);
+            past30Transactions.forEach(transaction=>{
+                if(transaction.getType() === "expense"){
+                    expenses.push(+transaction.getAmount())
+                    Expenses += transaction.getAmount()
+                    if(+transaction.getAmount() > maxValue){
+                        maxValue = +transaction.getAmount();
+                        maxValueName = transaction.getName();
+                    }
+                }else{
+                    incomes+= +transaction.getAmount();
+                }
+            })
+            let past30cat = []
+            for(let i =0;i<categories.length;i++){
+                past30cat[i] = past30Transactions.filter(transaction=>transaction.getCategory().toString() === categories[i]).map(transaction=>+transaction.getAmount()).reduce((sum,a)=>sum+a,0)
+            }
+            document.getElementById("past30name").innerHTML =`${maxValueName}`
+            document.getElementById("past30value").innerHTML = `${maxValue}`
+            document.getElementById("past30income").innerHTML = `+${incomes}`
+            document.getElementById("past30expenses").innerHTML = `-${Expenses}`
+            const pieChartRecords = new Chart("pie-chart-small",{
+                type:"pie",
+                data: {
+                    labels: categories,
+                    datasets:[{
+                        // backgroundColor: color,
+                        data: past30cat,
+                    }]
+                },
+            });
+            console.log(past30Transactions)
         }
         const setMonthlySummary = (date: Date)=>{
             if(chartId) chartId.destroy()
             let monthlySummary = {};
             console.log("date",date)
             console.log("date mm",date.getMonth())
-            transactions.filter(transaction=>new Date(transaction.getCreationDate()).getMonth());
+            transactions.filter(transaction=>new Date(transaction.date).getMonth());
             for(let category of categories){
                 const catTransactions = transactions.filter(transaction=>transaction.getCategory().toString() === category);
-                const dateTransactions = catTransactions.filter(transaction=>new Date(transaction.getCreationDate()).getFullYear() === date.getFullYear() && 
-                new Date(transaction.getCreationDate()).getMonth() === date.getMonth())
-                monthlySummary[`${category}`] = (dateTransactions.map(transaction=>+transaction.amount)).reduce((sum,a)=> sum+a ,0);
+                const dateTransactions = catTransactions.filter(transaction=>new Date(transaction.date).getFullYear() === date.getFullYear() && 
+                new Date(transaction.date).getMonth() === date.getMonth())
+                monthlySummary[`${category}`] = (dateTransactions.map(transaction=>+transaction.getAmount())).reduce((sum,a)=> sum+a ,0);
             }
             console.log("ms",monthlySummary)
             const x = Object.keys(monthlySummary); 
@@ -155,20 +195,24 @@ export default class HomePageController implements PageController {
             const currYear = document.getElementById("current-year");
             currYear.innerHTML = `${year}`;
             if(YearchartId) YearchartId.destroy()
-            const yearTransactions = transactions.filter(transaction=>new Date(transaction.getCreationDate()).getFullYear().toString() === year);
+            const yearTransactions = transactions.filter(transaction=>new Date(transaction.date).getFullYear().toString() === year);
             let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
             let monthlyIncome = [] 
             let monthlyExpense = [] 
             let total = [];
+            console.log("months[0]",transactions[8].date)
             for(let i=0;i<12;i++){
-                const monthIncomes = yearTransactions.filter(transaction=>new Date(transaction.getCreationDate()).getMonth() === i && transaction.getType() === "income");
-                const income = (monthIncomes.map(transaction=>+transaction.amount)).reduce((sum,a)=> sum+a,0);
+                const monthIncomes = yearTransactions.filter(transaction=>new Date(transaction.date).getMonth() === i && transaction.getType() === "income");
+                const income = (monthIncomes.map(transaction=>+transaction.getAmount())).reduce((sum,a)=> sum+a,0);
                 monthlyIncome.push(income);
-                const monthExpenses = yearTransactions.filter(transaction=>new Date(transaction.getCreationDate()).getMonth() === i && transaction.getType() === "expense");
-                const expenses = (monthExpenses.map(transaction=>+transaction.amount*-1)).reduce((sum,a)=> sum+a,0);
+                console.log(months[i],income)
+                const monthExpenses = yearTransactions.filter(transaction=>new Date(transaction.date).getMonth() === i && transaction.getType() === "expense");
+                const expenses = (monthExpenses.map(transaction=>+transaction.getAmount()*-1)).reduce((sum,a)=> sum+a,0);
                 monthlyExpense.push(expenses);
                 total.push(income + expenses);
             }
+            console.log("mx",monthlyIncome)
+            console.log(monthlyExpense)
             const line = new Chart("line-chart",{
                 type:"line",
                 data: {
@@ -208,31 +252,64 @@ export default class HomePageController implements PageController {
                             }
                         }
                     }
-                  }
+                }
             });
             YearchartId = line;
+            let ms = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             let income = [];
             let expenses = [];
+            let maxExpense = [0,0];
+            let minExpense = [0,1000000000000000];
+            let maxExpenseName = ""
             const maxArr = transactions.map(transaction=>{
-                if(new Date(transaction.getCreationDate()).getFullYear().toString() === year){
+                if(new Date(transaction.date).getFullYear().toString() === year){
                     if(transaction.getType() === "expense"){
-                        expenses.push(+transaction.amount)
-                        return +transaction.amount;
+                        expenses.push(+transaction.getAmount())
+                        if(+transaction.getAmount() > maxExpense[1]){
+                            maxExpense[1] = +transaction.getAmount();
+                            maxExpenseName = transaction.getName();
+                        }
+                        return +transaction.getAmount();
                     }else{
-                        income.push(+transaction.amount)
+                        income.push(+transaction.getAmount())
                         return 0;
                     }
                 }
                 return 0;
             })
+
+            for(let i=0;i<12;i++){
+                const monthExpenses = transactions.filter(transaction=>new Date(transaction.date).getFullYear().toString() === year 
+                && new Date(transaction.date).getMonth() === i).map(transaction=>transaction.getType() === "expense"? +transaction.getAmount():0).reduce((sum,a)=>sum+a,0);
+                if(monthExpenses > maxExpense[1]){
+                    maxExpense[0] = i;
+                    maxExpense[1] = monthExpenses;
+                }
+                if(monthExpenses < minExpense[1]){
+                    minExpense[0] = i;
+                    minExpense[1] = monthExpenses;
+                }
+
+            }
+
+
             const maxValue = Math.max(...maxArr)
             const totalIncome = income.reduce((sum,a)=>sum+a,0)
             const totalExpenses = expenses.reduce((sum,a)=>sum+a,0)
             console.log("mx",maxValue)
             document.getElementById("lg-exp-am").innerHTML = `${maxValue}`;
+            document.getElementById("lg-exp").innerHTML = `${maxExpenseName}`;
             document.getElementById("total-inc").innerHTML = `${totalIncome}`
             document.getElementById("total-exp").innerHTML = `${totalExpenses}`
             document.getElementById("total-balance").innerHTML = `${totalIncome-totalExpenses}`
+            document.getElementById("lg-ex-m").innerHTML = `${ms[maxExpense[0]]}`
+            document.getElementById("lg-ex-am").innerHTML = `${maxExpense[1]}`;
+            document.getElementById("lst-ex-m").innerHTML = `${ms[minExpense[0]]}`
+            document.getElementById("lst-ex-am").innerHTML = `${minExpense[1]}`;
+            document.getElementById("percentage").innerHTML = `${((+totalExpenses/+totalIncome)*100).toPrecision(3)}%`;
+            document.getElementById("perc-circle").setAttribute("stroke-dasharray",`${(+totalExpenses/+totalIncome)*100},100`)
+            console.log(ms[maxExpense[0]])
+            console.log(+totalExpenses/+totalIncome)
         }
 
         const monthDate = document.getElementById("monthly-summary-date")
@@ -260,16 +337,6 @@ export default class HomePageController implements PageController {
             },
         });
 
-        const pieChartRecords = new Chart("pie-chart-small",{
-            type:"pie",
-            data: {
-                labels: x,
-                datasets:[{
-                    // backgroundColor: color,
-                    data: y,
-                }]
-            },
-        });
         const barChartRecords = new Chart("bar-chart-small",{
             type:"bar",
             data: {
