@@ -26,6 +26,11 @@ export default abstract class Transaction {
     return this.type;
   }
 
+  public setType(type: TransactionType) {
+    this.type = type;
+    this.save();
+  }
+
   public getPaymentMethod() {
     return this.paymentMethod;
   }

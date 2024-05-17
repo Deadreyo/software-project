@@ -1,16 +1,20 @@
 
-# Running the project
+# Running the frontend
 
 1- Install nodejs and npm
 
-2- Install the dependencies
+2- Install the dependencies; run the following command:
 
 ```
 npm install
 ```
 
-3- To automatically compile the code:
+To compile the project, run the following command:
 
 ```
-npm start
+npm build
 ```
+
+Now the project is compiled and ready to be served. To serve the project, install Live Server extension in Visual Studio Code and run the HTML files.
+
+![](./img.png)
