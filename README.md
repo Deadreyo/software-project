@@ -42,3 +42,62 @@ The project follows a modular structure with separate HTML, CSS, and TypeScript 
 ## Usage
 
 To use the Expense Tracker Application, simply open the `homepage.html` file in a web browser. From there, you can navigate to different pages using the provided links in the navigation menu. To add new transactions, access the transaction form page (`form.html`) and fill out the required fields. For a more detailed analysis of your financial data, explore the dashboard (`dashboard.html`) for interactive charts and graphs.
+
+## Installation
+
+To run the Expense Tracker Application locally, follow these steps:
+
+### Prerequisites
+
+- Node.js installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
+- MongoDB installed and running as a service. You can download it from [mongodb.com](https://www.mongodb.com/).
+
+### Backend Setup
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   https://github.com/Deadreyo/software-project.git
+2. Navigate to the project directory:
+
+```bash
+cd backend
+```
+3. Install dependencies:
+
+```bash
+npm install
+```
+4. Set up environment variables by creating a .env file in the backend directory and adding the following variables:
+
+```bach
+PORT=3000
+MONGODB_URI=mongodb://localhost:27017/backend
+```
+ Replace mongodb://localhost:27017/backend r with your MongoDB connection URI if necessary.
+
+5. Start the backend server:
+
+```bash
+
+npm start
+```
+### Frontend Setup
+1. Navigate to the frontend directory:
+
+``` bash
+
+cd ../frontend
+```
+2. Install dependencies:
+
+``` bash
+npm install
+```
+3. Start the development server:
+
+``` bash
+
+npm start
+```
+Open your web browser and visit http://localhost:8080 to access the Expense Tracker Application.
