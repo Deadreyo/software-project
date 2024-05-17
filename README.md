@@ -2,6 +2,16 @@
 
 The Expense Tracker Application is a web-based tool designed to help users keep track of their expenses, manage transactions, and analyze spending patterns. The application is built using Node.js and MongoDB at the backend, with TypeScript used instead of JavaScript for improved type safety and developer experience. Below is an overview of the main pages included in the project:
 
+
+## Sample of pages
+![image1](https://github.com/Deadreyo/software-project/assets/89034348/b6b51257-6a34-48f9-b79f-ec5a65007064)
+![image](https://github.com/Deadreyo/software-project/assets/89034348/53b38009-84ef-4f31-a867-9854c12057db)
+![image6](https://github.com/Deadreyo/software-project/assets/89034348/56c54942-3fe2-4498-971f-78923222ebbd)
+![image5](https://github.com/Deadreyo/software-project/assets/89034348/e62c2fcb-e060-4552-be84-d99725c9e502)
+![image3](https://github.com/Deadreyo/software-project/assets/89034348/12224641-f2e9-42eb-8d23-87ed07bf2893)
+![image4](https://github.com/Deadreyo/software-project/assets/89034348/013c7b8e-3ec3-47f4-9bcf-36527ad7fdd7)
+
+
 ## 1. Homepage (`homepage.html`)
 
 The homepage serves as the main interface of the Expense Tracker Application. It provides users with an overview of their financial data and various tools for expense management and analysis. Key features of the homepage include:
